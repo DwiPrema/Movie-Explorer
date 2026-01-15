@@ -20,3 +20,15 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: RedHatDisplay
+      fonts:
+        - asset: assets/fonts/RedHatDisplay-Regular.ttf
+        - asset: assets/fonts/RedHatDisplay-Bold.ttf
+        - asset: assets/fonts/RedHatDisplay-Italic.ttf
+        - asset: assets/fonts/RedHatDisplay-BoldItalic.ttf
+        - asset: assets/fonts/RedHatDisplay-Medium.ttf
+        - asset: assets/fonts/RedHatDisplay-MediumItalic.ttf
+        - asset: assets/fonts/RedHatDisplay-SemiBold.ttf
+        - asset: assets/fonts/RedHatDisplay-SemiBoldItalic.ttf
+        
