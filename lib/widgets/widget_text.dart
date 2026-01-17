@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:movie_omdbid_api/core/constant/colors.dart';
 
-Widget title(String text, {TextAlign align = TextAlign.center, Color color = Colors.black, double fontSize = 20, FontWeight fontWeight = FontWeight.bold}) {
+Widget title(String text, {TextAlign align = TextAlign.center, Color color = AppColors.white, double fontSize = 24, FontWeight fontWeight = FontWeight.w400}) {
   return Align(
     child: Text(
       text,
       textAlign: align,
-      style: TextStyle(
+      style: TextStyle( 
+        fontFamily: 'RacingSansOne',
         color: color,
         fontSize: fontSize,
-        fontWeight: fontWeight,
+        fontWeight: fontWeight
       ),
     ),
   );
 }
 
-Widget subtitle(String text, {TextAlign align = TextAlign.center, Color color = Colors.grey, double fontSize = 16, FontWeight fontWeight = FontWeight.w400}) {
+Widget subtitle(String text, {TextAlign align = TextAlign.center, Color color = AppColors.grey, double fontSize = 16, FontWeight fontWeight = FontWeight.w400}) {
   return Align(
     child: Text(
       text,

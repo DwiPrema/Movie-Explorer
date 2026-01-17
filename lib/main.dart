@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_omdbid_api/features/home.dart';
 
 void main() {
   runApp(const MovieExplorer());
@@ -10,11 +11,8 @@ class MovieExplorer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      home: Home(),
     );
   }
 }

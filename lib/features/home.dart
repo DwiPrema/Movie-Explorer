@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_omdbid_api/core/constant/colors.dart';
+import 'package:movie_omdbid_api/features/home_screen/home_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -16,7 +17,6 @@ class _HomeState extends State<Home> {
     required String label,
     required int index,
   }) {
-    final bool isActive = _currentIndex == index;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
         child: Stack(
           children: [
             IndexedStack(index: _currentIndex, children: [
-              
+              HomeScreen(),
             ],
           ),
 
