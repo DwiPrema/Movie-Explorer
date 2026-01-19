@@ -1,7 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_omdbid_api/models/movie_model.dart';
+import 'package:movie_omdbid_api/features/home_screen/movie_provider.dart';
 import 'package:movie_omdbid_api/widgets/widget_text.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,8 +12,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late List<MovieModel> featuredMovies;
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<MovieProvider>()
+        ..load("batman")
+        ..load("spiderman")
+        ..load("harry potter");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +45,30 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
 
-          CarouselSlider(
-            items: [],
-            options: CarouselOptions(
-              viewportFraction: 1,
-              autoPlay: true,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-            ),
+          Consumer<MovieProvider>(
+            builder: (_, provider, _) {
+              if (provider.isLoading) {
+                return Center(child: const CircularProgressIndicator());
+              }
+
+              return CarouselSlider(
+                items: provider.movies
+                .where((movie) => movie.poster != null && movie.poster != "N/A")
+                .map((movie) {
+                  return Image.network(movie.poster);
+                })
+                .toList(),
+                options: CarouselOptions(
+                  viewportFraction: 1,
+                  autoPlay: true,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),

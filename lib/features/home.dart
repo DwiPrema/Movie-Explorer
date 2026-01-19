@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_omdbid_api/core/constant/colors.dart';
 import 'package:movie_omdbid_api/features/home_screen/home_screen.dart';
+import 'package:movie_omdbid_api/models/movie_model.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,6 +11,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<MovieModel>? snapshot;
   int _currentIndex = 0;
 
   Widget _navItem({
@@ -55,9 +57,8 @@ class _HomeState extends State<Home> {
         child: Stack(
           children: [
             IndexedStack(index: _currentIndex, children: [
-              HomeScreen(),
-            ],
-          ),
+              HomeScreen()
+            ]),
 
             Positioned(
               bottom: 0,

@@ -7,9 +7,12 @@ class MovieModel {
 
   factory MovieModel.createObject(Map<String, dynamic> movie) {
     return MovieModel(
-      title: movie["Title"],
-      year: movie["Year"],
-      poster: movie["Poster"],
+      title: movie["Title"] ?? "Unknown",
+      year: movie["Year"] ?? "-",
+      poster: movie["Poster"] != null || movie["Poster"] != "N/A" 
+      ? movie["Poster"]
+      : ""
     );
   }
+
 }
