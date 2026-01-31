@@ -9,10 +9,13 @@ class MovieService {
 
     final data = jsonDecode(response.body);
 
-    final List list = data["Search"];
-
-    return list
-        .map<MovieModel>((movie) => MovieModel.createObject(movie))
+    if (data['Response'] == 'True' && data['Search'] != null) {
+    return (data['Search'] as List)
+        .map((json) => MovieModel.createObject(json))
         .toList();
+  }
+
+  // penting: return list kosong TAPI bertipe MovieModel
+  return <MovieModel>[];
   }
 }

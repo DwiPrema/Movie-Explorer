@@ -19,10 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MovieProvider>()
-        ..load("batman")
-        ..load("spiderman")
-        ..load("harry potter");
+      context.read<MovieProvider>().load("harry potter");
     });
   }
 
@@ -51,21 +48,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Center(child: const CircularProgressIndicator());
               }
 
-              return CarouselSlider(
-                items: provider.movies
-                .where((movie) => movie.poster != null && movie.poster != "N/A")
-                .map((movie) {
-                  return Image.network(movie.poster);
-                })
-                .toList(),
-                options: CarouselOptions(
-                  viewportFraction: 1,
-                  autoPlay: true,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _currentIndex = index;
-                    });
-                  },
+              return SizedBox(
+                height: 250,
+                child: CarouselSlider(
+                  items: provider.movies
+                      .where((movie) => movie.poster.isNotEmpty)
+                      .map((movie) {
+                        return Image.network(
+                          movie.poster,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, progress) {
+                            if (progress == null) return child;
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(
+                              Icons.broken_image,
+                              size: 80,
+                              color: Colors.blue,
+                            );
+                          },
+                        );
+                      })
+                      .take(2)
+                      .toList(),
+                  options: CarouselOptions(viewportFraction: 1, autoPlay: true),
                 ),
               );
             },

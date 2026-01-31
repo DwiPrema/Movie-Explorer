@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:movie_omdbid_api/features/home.dart';
+import 'package:movie_omdbid_api/features/home_screen/movie_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MovieExplorer());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => MovieProvider(),
+      child: const MovieExplorer(),
+    ),
+  );
 }
 
 class MovieExplorer extends StatelessWidget {
@@ -10,9 +17,6 @@ class MovieExplorer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Home(),
-    );
+    return const MaterialApp(debugShowCheckedModeBanner: false, home: Home());
   }
 }

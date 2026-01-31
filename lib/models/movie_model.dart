@@ -9,7 +9,7 @@ class MovieModel {
     return MovieModel(
       title: movie["Title"] ?? "Unknown",
       year: movie["Year"] ?? "-",
-      poster: movie["Poster"] != null || movie["Poster"] != "N/A" 
+      poster: movie["Poster"] != null && movie["Poster"] != "N/A" 
       ? movie["Poster"]
       : ""
     );
