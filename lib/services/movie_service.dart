@@ -14,8 +14,7 @@ class MovieService {
         .map((json) => MovieModel.createObject(json))
         .toList();
   }
-
-  // penting: return list kosong TAPI bertipe MovieModel
+  
   return <MovieModel>[];
   }
 }
