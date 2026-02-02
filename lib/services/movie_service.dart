@@ -4,7 +4,7 @@ import "package:movie_omdbid_api/models/movie_model.dart";
 
 class MovieService {
   static Future<List<MovieModel>> searchMovie(String query) async {
-    String apiUrl = "http://www.omdbapi.com/?apikey=f2662f18&s= $query";
+    String apiUrl = "http://www.omdbapi.com/?apikey=f2662f18&s=$query";
     final response = await http.get(Uri.parse(apiUrl));
 
     final data = jsonDecode(response.body);
