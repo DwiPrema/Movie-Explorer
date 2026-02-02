@@ -30,7 +30,7 @@ class MovieModel {
       title: title,
       year: year,
       poster: poster,
-      released: released,
+      released: released ?? this.released,
     );
   }
 }

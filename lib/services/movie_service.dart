@@ -19,7 +19,7 @@ class MovieService {
     return <MovieModel>[];
   }
 
-  //latestmMovie service
+  //latestMovie service
   static Future<DateTime?> fetchReleased(String imdbId) async {
     String apiUrl = "http://www.omdbapi.com/?apikey=f2662f18&i=$imdbId";
     final res = await http.get(Uri.parse(apiUrl));
