@@ -18,18 +18,4 @@ class MovieService {
 
     return <MovieModel>[];
   }
-
-  //latestMovie service
-  static Future<DateTime?> fetchReleased(String imdbId) async {
-    String apiUrl = "http://www.omdbapi.com/?apikey=f2662f18&i=$imdbId";
-    final res = await http.get(Uri.parse(apiUrl));
-
-    final data = jsonDecode(res.body);
-
-    if (data["Released"] == 'N/A' && data["Released"] != null) {
-      return DateTime.tryParse(data["Released"].split(" ").reversed.join("-"));
-    }
-
-    return null;
-  }
 }

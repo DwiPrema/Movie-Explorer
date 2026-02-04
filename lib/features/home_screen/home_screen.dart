@@ -20,13 +20,13 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MovieProvider>()
-        ..clear()
-        ..load("batman")
-        ..load("harry potter")
-        ..load("iron man")
-        ..load("avengers")
-        ..load("joker");
+      context.read<MovieProvider>().loadMany([
+        "batman",
+        "joker",
+        "harry potter",
+        "avengers",
+        "spiderman",
+      ]);
     });
   }
 
