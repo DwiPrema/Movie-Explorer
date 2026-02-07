@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 items: provider.movies
                     .where(
                       (movie) =>
-                          movie.poster != "N/A" && movie.poster.isNotEmpty,
+                          movie.poster != "N/A",
                     )
                     .map((movie) {
                       return Padding(
@@ -105,16 +105,16 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
 
-        SizedBox(height: 32),
+        SizedBox(height: 16),
 
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(5, (index) {
             return AnimatedContainer(
               duration: Duration(milliseconds: 300),
-              width: _currentIndex == index ? 25 : 12,
-              height: 12,
-              margin: const EdgeInsets.symmetric(horizontal: 10),
+              width: _currentIndex == index ? 25 : 10,
+              height: 10,
+              margin: const EdgeInsets.symmetric(horizontal: 7),
               decoration: BoxDecoration(
                 color: _currentIndex == index
                     ? AppColors.primaryColor

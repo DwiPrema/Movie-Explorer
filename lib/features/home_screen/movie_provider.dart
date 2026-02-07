@@ -11,25 +11,29 @@ class MovieProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   Future<void> loadMany(List<String> keywords) async {
-    _isLoading = true;
-    notifyListeners();
+    try {
+      _isLoading = true;
+      notifyListeners();
 
-    _movies.clear();
+      _movies.clear();
 
-    for (final keyword in keywords) {
-      final result = await MovieService.searchMovie(keyword);
+      for (final keyword in keywords) {
+        final result = await MovieService.searchMovie(keyword);
 
-      if (result.isEmpty) continue;
+        if (result.isEmpty) continue;
 
-      final movie = result.firstWhere(
-        (m) => m.poster != 'N/A' && m.poster.isNotEmpty,
-        orElse: () => result.first,
-      );
+        final movie = result.firstWhere(
+          (m) => m.poster.isNotEmpty,
+          orElse: () => result.first,
+        );
 
-      _movies.add(movie);
+        _movies.add(movie);
+      }
+    } catch (e) {
+      print('Error loading movies: $e');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();
   }
 }

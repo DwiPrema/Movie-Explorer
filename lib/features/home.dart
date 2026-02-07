@@ -57,7 +57,9 @@ class _HomeState extends State<Home> {
         child: Stack(
           children: [
             IndexedStack(index: _currentIndex, children: [
-              HomeScreen()
+              HomeScreen(),
+              Center(child: Text('Search Screen')),
+              Center(child: Text('Profile Screen')),
             ]),
 
             Positioned(
