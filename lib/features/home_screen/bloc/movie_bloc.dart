@@ -13,22 +13,11 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       emit(MovieLoading());
 
       try {
-        final List<MovieModel> loadedMovie = [];
+        final result = await _service.upComingMovies();
 
-        for (final keyword in event.keywords) {
-          final result = await _service.getMovie(keyword);
+        final movies = result.take(5).toList();
 
-          if (result.isEmpty) continue;
-
-          final movie = result.firstWhere(
-            (m) => m.poster.isNotEmpty,
-            orElse: () => result.first,
-          );
-
-          loadedMovie.add(movie);
-        }
-
-        emit(MovieLoaded(movies: loadedMovie));
+        emit(MovieLoaded(movies: movies));
       } catch (e) {
         emit(MovieError(err: "Something went wrong : $e"));
       }

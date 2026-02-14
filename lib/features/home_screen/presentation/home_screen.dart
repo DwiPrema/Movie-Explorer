@@ -20,17 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MovieBloc>().add(
-        LoadMovie(
-          keywords: [
-            "joker",
-            "batman",
-            "spiderman",
-            "avengers",
-            "harry potter",
-          ],
-        ),
-      );
+      context.read<MovieBloc>().add(LoadMovie());
     });
   }
 
@@ -54,15 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
 
-        // Consumer<MovieProvider>(
-        //   builder: (_, provider, _) {
-        //     if (provider.isLoading) {
-        //       return Center(child: const CircularProgressIndicator());
-        //     }
-
-        //     return
-        //   },
-        // ),
         BlocBuilder<MovieBloc, MovieState>(
           builder: (context, state) {
             if (state is MovieLoading) {
@@ -72,14 +53,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 child: CarouselSlider(
                   items: state.movies
-                      .where((movie) => movie.poster != "N/A")
+                      .where((movie) => movie.poster != null && movie.poster!.isNotEmpty && movie.posterUrl().isNotEmpty)
                       .map((movie) {
                         return Padding(
                           padding: EdgeInsets.all(16),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
                             child: Image.network(
-                              movie.poster,
+                              movie.posterUrl(),
                               width: double.infinity,
                               fit: BoxFit.cover,
                               alignment: Alignment.center,

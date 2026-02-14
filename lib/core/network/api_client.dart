@@ -8,6 +8,8 @@ class ApiClient {
       connectTimeout: Duration(seconds: 10),
       receiveTimeout: Duration(seconds: 10),
       responseType: ResponseType.json,
+      contentType: "application/json",
+      headers: {"Authorization": "Bearer ${ApiConstant.bearerToken}"},
     ),
   );
 
@@ -16,10 +18,7 @@ class ApiClient {
     Map<String, dynamic>? queryParams,
   }) async {
     try {
-      final params = queryParams ?? {};
-      params['apikey'] = ApiConstant.apiKey;
-
-      final response = await _dio.get(path, queryParameters: params);
+      final response = await _dio.get(path, queryParameters: queryParams);
       return response;
     } on DioException catch (e) {
       throw Exception("Ada kesalahan : $e");

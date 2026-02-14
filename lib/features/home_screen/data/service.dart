@@ -4,20 +4,16 @@ import 'package:movie_omdbid_api/features/home_screen/data/model.dart';
 class MovieService {
   final ApiClient _apiClient = ApiClient();
 
-  Future<List<MovieModel>> getMovie(String query) async {
+  Future<List<MovieModel>> upComingMovies() async {
     try {
       final response = await _apiClient.getRequest(
-        "",
-        queryParams: {'s': query},
+        "/movie/upcoming",
+        queryParams: {"page": 1},
       );
 
-      if (response.data["Response"] == 'True' && response.data != null) {
-        return (response.data["Search"] as List)
-            .map((movie) => MovieModel.create(movie))
-            .toList();
-      } else {
-        throw response.data["Error"];
-      }
+      return (response.data["results"] as List)
+          .map((movie) => MovieModel.fromJson(movie))
+          .toList();
     } catch (e) {
       rethrow;
     }
