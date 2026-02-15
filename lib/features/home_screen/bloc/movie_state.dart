@@ -13,7 +13,8 @@ final class MovieError extends MovieState {
 }
 
 final class MovieLoaded extends MovieState {
-  List<MovieModel> movies;
+  Map<MovieCategory, List<MovieModel>> movies;
+  Map<MovieCategory, DateRange>? dates;
 
-  MovieLoaded({required this.movies});
+  MovieLoaded({required this.movies, this.dates});
 }

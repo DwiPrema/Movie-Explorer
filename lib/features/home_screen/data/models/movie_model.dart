@@ -11,9 +11,13 @@ class MovieModel {
     return MovieModel(
       title: json["title"],
       year: json["release_date"],
-      poster: json["poster_path"],
+      poster: json["poster_path"]
     );
   }
+
+  bool get hasValidPoster => poster != null && poster!.isNotEmpty;
+
+  bool get isValid => hasValidPoster && title.isNotEmpty && year.isNotEmpty;
 
   String posterUrl({String size = "w500"}) {
     if (poster == null || poster!.isEmpty) {

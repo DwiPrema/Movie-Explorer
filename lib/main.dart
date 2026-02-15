@@ -45,7 +45,7 @@ class _MovieExplorerState extends State<MovieExplorer> {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: "RedHatDisplay",
               fontWeight: FontWeight.w700,
               fontSize: 8,
@@ -71,7 +71,7 @@ class _MovieExplorerState extends State<MovieExplorer> {
             children: [
               IndexedStack(
                 index: _currentIndex,
-                children: [
+                children: const [
                   HomeScreen(),
                   Center(child: Text('Search Screen')),
                   Center(child: Text('Profile Screen')),
@@ -83,13 +83,13 @@ class _MovieExplorerState extends State<MovieExplorer> {
                 child: Container(
                   height: 64,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppColors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(15),
                       topRight: Radius.circular(15),
                     ),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
                         color: Color(0xff2A0002),
                         blurRadius: 10,
@@ -101,7 +101,7 @@ class _MovieExplorerState extends State<MovieExplorer> {
                     alignment: Alignment.center,
                     children: [
                       AnimatedPositioned(
-                        duration: Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 500),
                         top: 0,
                         curve: Curves.easeOut,
                         left:

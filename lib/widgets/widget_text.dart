@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_omdbid_api/core/constant/colors.dart';
 
 Widget title(String text, {TextAlign align = TextAlign.center, Color color = AppColors.white, double fontSize = 24, FontWeight fontWeight = FontWeight.w400}) {
-  return Align(
-    child: Text(
+  return Text(
       text,
       textAlign: align,
       style: TextStyle( 
@@ -12,20 +11,18 @@ Widget title(String text, {TextAlign align = TextAlign.center, Color color = App
         fontSize: fontSize,
         fontWeight: fontWeight
       ),
-    ),
-  );
+    );
 }
 
 Widget subtitle(String text, {TextAlign align = TextAlign.center, Color color = AppColors.grey, double fontSize = 16, FontWeight fontWeight = FontWeight.w400}) {
-  return Align(
-    child: Text(
+  return Text(
       text,
       textAlign: align,
       style: TextStyle(
+        fontFamily: "RedHatDisplay",
         color: color,
         fontSize: fontSize,
         fontWeight: fontWeight,
       ),
-    ),
-  );
+    );
 }

@@ -5,8 +5,8 @@ class ApiClient {
   final Dio _dio = Dio(
     BaseOptions(
       baseUrl: ApiConstant.baseUrl,
-      connectTimeout: Duration(seconds: 10),
-      receiveTimeout: Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
       responseType: ResponseType.json,
       contentType: "application/json",
       headers: {"Authorization": "Bearer ${ApiConstant.bearerToken}"},

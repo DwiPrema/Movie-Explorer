@@ -1,0 +1,3 @@
+enum MovieCategory {
+  nowPlaying, upComing
+}
