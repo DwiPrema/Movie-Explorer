@@ -33,7 +33,9 @@ this project built for **learning purpose, practice, and portfolio showcase** fo
 lib/
 ├── core/
 │   ├── constant/
-│   └── network/
+│   ├── network/
+│   ├── routes/
+│   └── utils
 ├── features/
 │   └── home_screen/
 │       ├── bloc/
