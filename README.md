@@ -34,7 +34,6 @@ lib/
 ├── core/
 │   ├── constant/
 │   ├── network/
-│   ├── routes/
 │   └── utils
 ├── features/
 │   └── home_screen/
@@ -42,6 +41,7 @@ lib/
 │       ├── data/
 │       │   ├── model.dart
 │       │   └── service.dart
+│       ├── domain/
 │       └── presentation/
 ├── widgets/
 └── main.dart
