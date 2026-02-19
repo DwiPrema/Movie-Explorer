@@ -2,19 +2,43 @@ part of 'movie_bloc.dart';
 
 sealed class MovieState {}
 
-final class MovieInitial extends MovieState {}
-
-final class MovieLoading extends MovieState {}
-
-final class MovieError extends MovieState {
-  String err;
-
-  MovieError({required this.err});
-}
-
-final class MovieLoaded extends MovieState {
+final class MovieStateData extends MovieState {
   Map<MovieCategory, List<MovieModel>> movies;
-  Map<MovieCategory, DateRange>? dates;
+  Map<MovieCategory, MovieStatus> status;
+  Map<MovieCategory, String?> errorMessage;
+  Map<MovieCategory, DateRange?> dates;
 
-  MovieLoaded({required this.movies, this.dates});
+  MovieStateData({
+    required this.movies,
+    required this.status,
+    required this.errorMessage,
+    required this.dates,
+  });
+
+  factory MovieStateData.initial() {
+    return MovieStateData(
+      movies: {},
+      status: {
+        MovieCategory.upComing: MovieStatus.initial,
+        MovieCategory.nowPlaying: MovieStatus.initial,
+        MovieCategory.popular: MovieStatus.initial,
+      },
+      errorMessage: {},
+      dates: {},
+    );
+  }
+
+  MovieStateData copyWith({
+    Map<MovieCategory, List<MovieModel>>? movies,
+    Map<MovieCategory, MovieStatus>? status,
+    Map<MovieCategory, String?>? errorMessage,
+    Map<MovieCategory, DateRange?>? dates,
+  }) {
+    return MovieStateData(
+      movies: movies ?? this.movies,
+      status: status ?? this.status,
+      errorMessage: errorMessage ?? this.errorMessage,
+      dates: dates ?? this.dates,
+    );
+  }
 }
