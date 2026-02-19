@@ -13,6 +13,8 @@ class MovieService {
         return nowPlaying();
       case MovieCategory.popular:
         return popular();
+      case MovieCategory.topRated:
+        return topRated();
     }
   }
 
@@ -46,6 +48,19 @@ class MovieService {
     try {
       final response = await _apiClient.getRequest(
         "/movie/popular",
+        queryParams: {"page": 1},
+      );
+
+      return MovieListResponse.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<MovieListResponse> topRated() async {
+    try {
+      final response = await _apiClient.getRequest(
+        "/movie/top_rated",
         queryParams: {"page": 1},
       );
 
