@@ -1,17 +1,19 @@
 import 'package:movie_omdbid_api/core/constant/api_constant.dart';
 
 class MovieModel {
+  int movieId;
   String title;
   String year;
   String? poster;
 
-  MovieModel({required this.title, required this.year, required this.poster});
+  MovieModel({required this.movieId, required this.title, required this.year, required this.poster});
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
     return MovieModel(
+      movieId: json["id"],
       title: json["title"],
       year: json["release_date"],
-      poster: json["poster_path"]
+      poster: json["poster_path"],
     );
   }
 
