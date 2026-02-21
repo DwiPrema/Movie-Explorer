@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movie_omdbid_api/core/constant/colors.dart';
+import 'package:movie_omdbid_api/core/routes/app_router.dart';
 import 'package:movie_omdbid_api/features/home_screen/bloc/movie_bloc.dart';
 import 'package:movie_omdbid_api/features/home_screen/presentation/home_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,8 +62,11 @@ class _MovieExplorerState extends State<MovieExplorer> {
     double itemWidth = MediaQuery.of(context).size.width / 3;
     double indicatorWidth = 70;
 
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      onGenerateRoute: AppRouter.generate,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.bgColor,
