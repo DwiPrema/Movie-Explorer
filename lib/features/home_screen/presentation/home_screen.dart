@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_omdbid_api/features/home_screen/bloc/movie_bloc.dart';
 import 'package:movie_omdbid_api/features/home_screen/domain/movie_category.dart';
 import 'package:movie_omdbid_api/features/home_screen/widgets/carousel_card.dart';
-import 'package:movie_omdbid_api/features/home_screen/widgets/carousel_image.dart';
+import 'package:movie_omdbid_api/features/home_screen/widgets/carousel_backdrop.dart';
 import 'package:movie_omdbid_api/widgets/widget_text.dart';
 
 class HomeScreen extends StatefulWidget {

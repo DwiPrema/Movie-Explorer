@@ -42,7 +42,7 @@ class _CarouselImageState extends State<CarouselImage> {
                           (movie) =>
                               movie.poster != null &&
                               movie.poster!.isNotEmpty &&
-                              movie.posterUrl().isNotEmpty,
+                              movie.backdropUrl().isNotEmpty,
                         )
                         .map((movie) {
                           return Padding(
@@ -50,7 +50,7 @@ class _CarouselImageState extends State<CarouselImage> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
                               child: Image.network(
-                                movie.posterUrl(),
+                                movie.backdropUrl(),
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                                 alignment: Alignment.center,

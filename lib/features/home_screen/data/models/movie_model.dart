@@ -5,8 +5,9 @@ class MovieModel {
   String title;
   String year;
   String? poster;
+  String? backdropPath;
 
-  MovieModel({required this.movieId, required this.title, required this.year, required this.poster});
+  MovieModel({required this.movieId, required this.title, required this.year, required this.poster, required this.backdropPath});
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
     return MovieModel(
@@ -14,6 +15,7 @@ class MovieModel {
       title: json["title"],
       year: json["release_date"],
       poster: json["poster_path"],
+      backdropPath: json["backdrop_path"],
     );
   }
 
@@ -27,5 +29,13 @@ class MovieModel {
     }
 
     return "${ApiConstant.imageBaseUrl}$size$poster";
+  }
+
+  String backdropUrl({String size = "w500"}) {
+    if (backdropPath == null || backdropPath!.isEmpty) {
+      return "";
+    }
+
+    return "${ApiConstant.imageBaseUrl}$size$backdropPath";
   }
 }
