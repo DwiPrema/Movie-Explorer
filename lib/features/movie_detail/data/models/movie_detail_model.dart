@@ -1,5 +1,4 @@
 import 'package:movie_omdbid_api/core/constant/api_constant.dart';
-import 'package:movie_omdbid_api/features/movie_detail/data/models/production_countries_model.dart';
 
 class MovieDetailModel {
   int movieId;
@@ -12,8 +11,10 @@ class MovieDetailModel {
   String? posterPath;
   String? backdropPath;
   double popularity;
-  List<String> genres;
-  List<ProductionCountriesModel> productionCountries;
+  String genres;
+  String productionCountries;
+  String status;
+  String tagline;
 
   MovieDetailModel({
     required this.movieId,
@@ -28,6 +29,8 @@ class MovieDetailModel {
     required this.popularity,
     required this.genres,
     required this.productionCountries,
+    required this.status,
+    required this.tagline,
   });
 
   factory MovieDetailModel.fromJson(Map<String, dynamic> json) {
@@ -42,10 +45,12 @@ class MovieDetailModel {
       posterPath: json["poster_path"],
       backdropPath: json["backdrop_path"],
       popularity: json["popularity"],
-      genres: (json["genres"] as List).map((e) => e["name"] as String).toList(),
+      genres: (json["genres"] as List).map((e) => "${e["name"]}").join(", "),
       productionCountries: (json["production_countries"] as List)
-          .map((e) => ProductionCountriesModel.fromJson(e))
-          .toList(),
+          .map((e) => "${e["iso_3166_1"]}-${e["name"]}")
+          .join(", "),
+      status: json["status"],
+      tagline: json["tagline"],
     );
   }
 

@@ -14,7 +14,7 @@ Widget title(String text, {TextAlign align = TextAlign.center, Color color = App
     );
 }
 
-Widget subtitle(String text, {TextAlign align = TextAlign.center, Color color = AppColors.grey, double fontSize = 16, FontWeight fontWeight = FontWeight.w400}) {
+Widget subtitle(String text, {TextAlign align = TextAlign.center, Color color = AppColors.grey, double fontSize = 16, FontWeight fontWeight = FontWeight.w400, FontStyle fontStyle = FontStyle.normal}) {
   return Text(
       text,
       textAlign: align,
@@ -23,6 +23,7 @@ Widget subtitle(String text, {TextAlign align = TextAlign.center, Color color = 
         color: color,
         fontSize: fontSize,
         fontWeight: fontWeight,
+        fontStyle: fontStyle,
       ),
     );
 }

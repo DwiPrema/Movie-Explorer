@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_omdbid_api/core/constant/colors.dart';
+import 'package:movie_omdbid_api/features/movie_detail/widgets/detail_card.dart';
 import 'package:movie_omdbid_api/features/movie_detail/widgets/detail_header.dart';
 
 class MovieDetail extends StatefulWidget {
@@ -11,27 +12,20 @@ class MovieDetail extends StatefulWidget {
 }
 
 class _MovieDetailState extends State<MovieDetail> {
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     context.read<MovieDetailBloc>().add(LoadDetail(movieId: widget.movieId));
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.bgColor,
-      body: SingleChildScrollView(
+      body: SafeArea(child: SingleChildScrollView(
         child: Column(
           children: [
             DetailHeader(),
+            DetailCard(),
           ],
         ),
-      ),
+      ),),
     );
   }
 }
