@@ -48,8 +48,7 @@ lib/
 │       └── widgets/
 ├── widgets/
 └── main.dart
-
-
+```
 ## Screenshots
 🚧 Screenshots will be added soon
 
