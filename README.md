@@ -1,31 +1,25 @@
-# 🎬 Movie Explorer
+# Movie Explorer 🎬
 
-Movie Explorer is an simple flutter application that displays movie information using **TMDB (The Movie Database) API**.  
-this project built for **learning purpose, practice, and portfolio showcase** focusing on clean architecture and state management
+Movie Explorer is a Flutter application that allows users to explore movies using the TMDB API.
 
----
+This project is built as a learning project to practice Flutter, REST API integration, and BLoC state management.
 
-## ✨ Features
+## Features
+- Display popular movies
+- Movie detail page
+- Loading handling
+- Clean architecture (core & features separation)
+- BLoC state management
 
-- Displays list **Upcoming Movies** from TMDB
-- Movie poster carousel slider
-- State management using **BLoC**
-- Separated architecture (data, service, bloc, presentation)
-- Loading & error state handling
-- REST API consumption using **Dio**
-
----
-
-## 🧠 Technologies Used
-
+## Tech Stack
 - **Flutter**
 - **Dart**
-- **flutter_bloc**
-- **Dio**
+- **BLoC (flutter_bloc)**
+- **Dio** (REST API)
+- **Cached Network Image**
 - **Carousel Slider**
 - **TMDB API**
-
----
+- **Environment Variables** (`flutter_dotenv`)
 
 ## 📁 Project Structure (Simplified)
 
@@ -34,14 +28,34 @@ lib/
 ├── core/
 │   ├── constant/
 │   ├── network/
-│   └── utils
+│   ├── routes/
+│   └── utils/
 ├── features/
-│   └── home_screen/
+│   ├── home_screen/
+│   │   ├── bloc/
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │   └── services/
+│   │   ├── domain/
+│   │   ├── presentation/
+│   │   └── widgets/
+│   └── movie_detail/
 │       ├── bloc/
 │       ├── data/
-│       │   ├── model.dart
-│       │   └── service.dart
-│       ├── domain/
-│       └── presentation/
+│       │   ├── models/
+│       │   └── services/
+│       ├── presentation/
+│       └── widgets/
 ├── widgets/
 └── main.dart
+
+
+## Screenshots
+🚧 Screenshots will be added soon
+
+## Project Status
+🚧 In Progress  
+Planned features:
+- Error handling
+- Search movie
+- Favorite movie
