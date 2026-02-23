@@ -1,12 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_omdbid_api/core/constant/colors.dart';
-import 'package:movie_omdbid_api/features/home_screen/bloc/movie_bloc.dart';
-import 'package:movie_omdbid_api/features/home_screen/data/models/movie_view_model.dart';
-import 'package:movie_omdbid_api/features/home_screen/data/models/selector_category.dart';
-import 'package:movie_omdbid_api/features/home_screen/domain/movie_category.dart';
-import 'package:movie_omdbid_api/features/home_screen/domain/movie_status.dart';
+import 'package:movie_explorer/core/constant/colors.dart';
+import 'package:movie_explorer/features/home_screen/bloc/movie_bloc.dart';
+import 'package:movie_explorer/features/home_screen/data/models/movie_view_model.dart';
+import 'package:movie_explorer/features/home_screen/data/models/selector_category.dart';
+import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
+import 'package:movie_explorer/features/home_screen/domain/movie_status.dart';
 
 class CarouselImage extends StatefulWidget {
   final MovieCategory category;

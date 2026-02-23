@@ -1,4 +1,4 @@
-import 'package:movie_omdbid_api/core/constant/api_constant.dart';
+import 'package:movie_explorer/core/constant/api_constant.dart';
 
 class MovieModel {
   int movieId;

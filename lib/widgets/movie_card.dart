@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_omdbid_api/core/constant/colors.dart';
-import 'package:movie_omdbid_api/core/routes/app_routes.dart';
-import 'package:movie_omdbid_api/features/home_screen/data/models/movie_model.dart';
-import 'package:movie_omdbid_api/widgets/widget_text.dart';
+import 'package:movie_explorer/core/constant/colors.dart';
+import 'package:movie_explorer/core/routes/app_routes.dart';
+import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
+import 'package:movie_explorer/widgets/widget_text.dart';
 
 class MovieCard extends StatelessWidget {
   final MovieModel movie;

@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:movie_omdbid_api/features/home_screen/data/models/date_range_model.dart';
-import 'package:movie_omdbid_api/features/home_screen/data/models/movie_model.dart';
-import 'package:movie_omdbid_api/features/home_screen/data/services/service.dart';
-import 'package:movie_omdbid_api/features/home_screen/domain/movie_category.dart';
-import 'package:movie_omdbid_api/features/home_screen/domain/movie_status.dart';
+import 'package:movie_explorer/features/home_screen/data/models/date_range_model.dart';
+import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
+import 'package:movie_explorer/features/home_screen/data/services/service.dart';
+import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
+import 'package:movie_explorer/features/home_screen/domain/movie_status.dart';
 
 part 'movie_event.dart';
 part 'movie_state.dart';

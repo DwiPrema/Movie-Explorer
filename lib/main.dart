@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:movie_omdbid_api/core/constant/colors.dart';
-import 'package:movie_omdbid_api/core/routes/app_router.dart';
-import 'package:movie_omdbid_api/features/home_screen/bloc/movie_bloc.dart';
-import 'package:movie_omdbid_api/features/home_screen/presentation/home_screen.dart';
+import 'package:movie_explorer/core/constant/colors.dart';
+import 'package:movie_explorer/core/routes/app_router.dart';
+import 'package:movie_explorer/core/routes/app_routes.dart';
+import 'package:movie_explorer/features/home_screen/bloc/movie_bloc.dart';
+import 'package:movie_explorer/features/home_screen/presentation/home_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
@@ -65,7 +66,7 @@ class _MovieExplorerState extends State<MovieExplorer> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: AppRoutes.home,
       onGenerateRoute: AppRouter.generate,
       home: Scaffold(
         resizeToAvoidBottomInset: false,

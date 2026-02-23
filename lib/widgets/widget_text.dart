@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_omdbid_api/core/constant/colors.dart';
+import 'package:movie_explorer/core/constant/colors.dart';
 
 Widget title(String text, {TextAlign align = TextAlign.center, Color color = AppColors.white, double fontSize = 24, FontWeight fontWeight = FontWeight.w400}) {
   return Text(

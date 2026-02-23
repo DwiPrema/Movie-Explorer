@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_omdbid_api/features/home_screen/bloc/movie_bloc.dart';
-import 'package:movie_omdbid_api/features/home_screen/domain/movie_category.dart';
-import 'package:movie_omdbid_api/features/home_screen/widgets/carousel_card.dart';
-import 'package:movie_omdbid_api/features/home_screen/widgets/carousel_backdrop.dart';
-import 'package:movie_omdbid_api/widgets/widget_text.dart';
+import 'package:movie_explorer/features/home_screen/bloc/movie_bloc.dart';
+import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
+import 'package:movie_explorer/features/home_screen/widgets/carousel_card.dart';
+import 'package:movie_explorer/features/home_screen/widgets/carousel_backdrop.dart';
+import 'package:movie_explorer/widgets/widget_text.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

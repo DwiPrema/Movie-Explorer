@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movie_omdbid_api/core/constant/colors.dart';
-import 'package:movie_omdbid_api/features/movie_detail/widgets/detail_card.dart';
-import 'package:movie_omdbid_api/features/movie_detail/widgets/detail_header.dart';
+import 'package:movie_explorer/core/constant/colors.dart';
+import 'package:movie_explorer/features/movie_detail/widgets/detail_card.dart';
+import 'package:movie_explorer/features/movie_detail/widgets/detail_header.dart';
 
 class MovieDetail extends StatefulWidget {
   final int movieId;

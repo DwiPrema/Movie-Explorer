@@ -1,6 +1,6 @@
-import 'package:movie_omdbid_api/core/network/api_client.dart';
-import 'package:movie_omdbid_api/features/home_screen/data/models/movie_list_response.dart';
-import 'package:movie_omdbid_api/features/home_screen/domain/movie_category.dart';
+import 'package:movie_explorer/core/network/api_client.dart';
+import 'package:movie_explorer/features/home_screen/data/models/movie_list_response.dart';
+import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
 
 class MovieService {
   final ApiClient _apiClient = ApiClient();

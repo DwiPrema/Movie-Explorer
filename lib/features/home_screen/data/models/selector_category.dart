@@ -1,7 +1,7 @@
-import 'package:movie_omdbid_api/features/home_screen/bloc/movie_bloc.dart';
-import 'package:movie_omdbid_api/features/home_screen/data/models/movie_view_model.dart';
-import 'package:movie_omdbid_api/features/home_screen/domain/movie_category.dart';
-import 'package:movie_omdbid_api/features/home_screen/domain/movie_status.dart';
+import 'package:movie_explorer/features/home_screen/bloc/movie_bloc.dart';
+import 'package:movie_explorer/features/home_screen/data/models/movie_view_model.dart';
+import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
+import 'package:movie_explorer/features/home_screen/domain/movie_status.dart';
 
 MovieCategoryViewData selectMovieCategory(
   MovieState state,

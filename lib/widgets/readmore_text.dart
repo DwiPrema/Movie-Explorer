@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_omdbid_api/core/constant/colors.dart';
+import 'package:movie_explorer/core/constant/colors.dart';
 
 class ReadmoreText extends StatefulWidget {
   final String text;

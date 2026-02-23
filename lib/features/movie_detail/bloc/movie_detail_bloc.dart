@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:movie_omdbid_api/features/movie_detail/data/models/movie_detail_model.dart';
-import 'package:movie_omdbid_api/features/movie_detail/data/services/movie_detail_services.dart';
+import 'package:movie_explorer/features/movie_detail/data/models/movie_detail_model.dart';
+import 'package:movie_explorer/features/movie_detail/data/services/movie_detail_services.dart';
 
 part 'movie_detail_event.dart';
 part 'movie_detail_state.dart';

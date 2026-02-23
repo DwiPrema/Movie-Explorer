@@ -1,5 +1,5 @@
-import 'package:movie_omdbid_api/features/home_screen/data/models/date_range_model.dart';
-import 'package:movie_omdbid_api/features/home_screen/data/models/movie_model.dart';
+import 'package:movie_explorer/features/home_screen/data/models/date_range_model.dart';
+import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
 
 class MovieListResponse {
   final DateRange? dates;

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_omdbid_api/core/constant/colors.dart';
-import 'package:movie_omdbid_api/features/movie_detail/bloc/movie_detail_bloc.dart';
-import 'package:movie_omdbid_api/widgets/readmore_text.dart';
-import 'package:movie_omdbid_api/widgets/widget_text.dart';
+import 'package:movie_explorer/core/constant/colors.dart';
+import 'package:movie_explorer/core/routes/app_routes.dart';
+import 'package:movie_explorer/features/movie_detail/bloc/movie_detail_bloc.dart';
+import 'package:movie_explorer/widgets/readmore_text.dart';
+import 'package:movie_explorer/widgets/widget_text.dart';
 
 class DetailHeader extends StatelessWidget {
   const DetailHeader({super.key});
@@ -60,11 +61,18 @@ class DetailHeader extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             child: Padding(
                               padding: const EdgeInsets.only(left: 16, top: 16),
-                              child: CircleAvatar(
-                                backgroundColor: AppColors.white.withAlpha(50),
-                                child: const Icon(
-                                  Icons.arrow_back,
-                                  color: AppColors.white,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, AppRoutes.home);
+                                },
+                                child: CircleAvatar(
+                                  backgroundColor: AppColors.white.withAlpha(
+                                    50,
+                                  ),
+                                  child: const Icon(
+                                    Icons.arrow_back,
+                                    color: AppColors.white,
+                                  ),
                                 ),
                               ),
                             ),

@@ -1,5 +1,5 @@
-import 'package:movie_omdbid_api/core/network/api_client.dart';
-import 'package:movie_omdbid_api/features/movie_detail/data/models/movie_detail_model.dart';
+import 'package:movie_explorer/core/network/api_client.dart';
+import 'package:movie_explorer/features/movie_detail/data/models/movie_detail_model.dart';
 
 class MovieDetailServices {
   final ApiClient _apiClient = ApiClient();
@@ -8,7 +8,7 @@ class MovieDetailServices {
     try {
       final detail = await _apiClient.getRequest("/movie/$id");
 
-      print("detail : ${id}");
+      print("detail : $id");
 
       return MovieDetailModel.fromJson(detail.data);
     } catch (e) {
