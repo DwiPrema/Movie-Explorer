@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_explorer/features/home_screen/bloc/movie_bloc.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
-import 'package:movie_explorer/features/home_screen/widgets/carousel_card.dart';
+import 'package:movie_explorer/features/home_screen/widgets/carousel_card_category.dart';
 import 'package:movie_explorer/features/home_screen/widgets/carousel_backdrop.dart';
 import 'package:movie_explorer/widgets/widget_text.dart';
 
@@ -51,21 +51,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
           const SizedBox(height: 50),
 
-          const CarouselCard(
+          const CarouselCardCategory(
             textTitleCategory: "Now Playing",
             category: MovieCategory.nowPlaying,
+            isDates: true,
           ),
 
           const SizedBox(height: 50),
 
-          const CarouselCard(
+          const CarouselCardCategory(
             textTitleCategory: "Popular",
             category: MovieCategory.popular,
           ),
 
           const SizedBox(height: 50),
 
-          const CarouselCard(
+          const CarouselCardCategory(
             textTitleCategory: "Top Rated",
             category: MovieCategory.topRated,
           ),

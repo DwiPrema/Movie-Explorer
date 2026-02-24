@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
 import 'package:movie_explorer/features/movie_detail/bloc/movie_detail_bloc.dart';
-import 'package:movie_explorer/widgets/carousel_card_test.dart';
+import 'package:movie_explorer/widgets/carousel_card.dart';
 import 'package:movie_explorer/widgets/widget_text.dart';
 
 class RecommendedMovieSection extends StatelessWidget {
@@ -14,8 +14,7 @@ class RecommendedMovieSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CarouselCardTest(
-          errorMessage: null,
+        CarouselCard(
           movies: movies,
           textTitleCategory: "You Might Also Like",
         ),

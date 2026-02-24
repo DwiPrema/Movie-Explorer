@@ -6,19 +6,21 @@ import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
 import 'package:movie_explorer/widgets/movie_card.dart';
 import 'package:movie_explorer/widgets/widget_text.dart';
 
-class CarouselCardTest extends StatelessWidget {
+class CarouselCard extends StatelessWidget {
   final String? textTitleCategory;
   final MovieCategory? category;
   final List<MovieModel> movies;
   final String? dates;
+  final bool isDates;
   final bool isLoading;
   final String? errorMessage;
 
-  const CarouselCardTest({
+  const CarouselCard({
     super.key,
     this.dates,
+    this.isDates = false,
     this.isLoading = false,
-    required this.errorMessage,
+    this.errorMessage,
     required this.movies,
     this.textTitleCategory,
     this.category,
@@ -53,19 +55,20 @@ class CarouselCardTest extends StatelessWidget {
                   ),
                 ),
 
-              if (dates != null)
-                Expanded(
+              (isDates)
+                ? Expanded(
                   child: subtitle(
-                    dates!,
+                    dates ?? "",
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                     align: TextAlign.right,
                   ),
-                ),
+                )
+                : const SizedBox.shrink(),
             ],
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
         SizedBox(
           width: double.infinity,
           child: CarouselSlider(
