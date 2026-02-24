@@ -24,7 +24,7 @@ class DetailHeader extends StatelessWidget {
                   children: [
                     Positioned.fill(
                       child: Image.network(
-                        state.detail.backdropUrl(),
+                        state.detail.backdropUrl,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -63,7 +63,7 @@ class DetailHeader extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 16, top: 16),
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(context, AppRoutes.home);
+                                  Navigator.pop(context, AppRoutes.home);
                                 },
                                 child: CircleAvatar(
                                   backgroundColor: AppColors.white.withAlpha(

@@ -4,6 +4,7 @@ sealed class MovieDetailEvent {}
 
 final class LoadDetail extends MovieDetailEvent {
   final int movieId;
+  final int genreId;
 
-  LoadDetail({required this.movieId});
+  LoadDetail({required this.movieId, required this.genreId});
 }

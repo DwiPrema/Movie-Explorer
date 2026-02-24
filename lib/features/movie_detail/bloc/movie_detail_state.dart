@@ -9,7 +9,8 @@ final class MovieDetailLoading extends MovieDetailState {}
 final class MovieDetailError extends MovieDetailState {}
 
 final class MovieDetailSuccess extends MovieDetailState {
-  final MovieDetailModel detail;
+  final MovieDetailViewModel detail;
+  final List<MovieModel> movies;
 
-  MovieDetailSuccess({required this.detail});
+  MovieDetailSuccess({required this.detail, required this.movies});
 }

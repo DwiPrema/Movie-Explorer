@@ -6,8 +6,16 @@ class MovieModel {
   String year;
   String? poster;
   String? backdropPath;
+  List<int> genres;
 
-  MovieModel({required this.movieId, required this.title, required this.year, required this.poster, required this.backdropPath});
+  MovieModel({
+    required this.movieId,
+    required this.title,
+    required this.year,
+    required this.poster,
+    required this.backdropPath,
+    required this.genres,
+  });
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
     return MovieModel(
@@ -16,6 +24,9 @@ class MovieModel {
       year: json["release_date"],
       poster: json["poster_path"],
       backdropPath: json["backdrop_path"],
+      genres: (json["genre_ids"] as List)
+      .map((g) => g as int)
+      .toList(),
     );
   }
 

@@ -10,11 +10,15 @@ class AppRouter {
   static Route<dynamic>? generate(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.toDetail:
-        final movieId = settings.arguments as int;
+        final args = settings.arguments as Map<String, dynamic>;
+
+        final int movieId = args['movieId'];
+        final int genreId = args['genreId'];
 
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (_) => MovieDetailBloc()..add(LoadDetail(movieId: movieId)),
+            create: (_) => MovieDetailBloc()
+              ..add(LoadDetail(movieId: movieId, genreId: genreId)),
             child: MovieDetail(movieId: movieId),
           ),
         );

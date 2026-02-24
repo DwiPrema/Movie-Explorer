@@ -32,7 +32,7 @@ class DetailCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.network(
-                      state.detail.posterUrl(),
+                      state.detail.posterUrl,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -47,12 +47,12 @@ class DetailCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _InfoText("Original title", state.detail.originalTitle),
-                        _InfoText("Original language", state.detail.oriLanguage),
+                        _InfoText("Original language", state.detail.originalLanguage),
                         _InfoText("Released date", state.detail.releaseDate),
-                        _InfoText("Production country", state.detail.productionCountries.toString()),
+                        _InfoText("Production country", state.detail.productionCountriesText.toString()),
                         _InfoText("Status", state.detail.status),
                         _InfoText("Tagline", state.detail.tagline),
-                        _InfoText("Genres", state.detail.genres),
+                        _InfoText("Genres", state.detail.genresText),
                       ],
                     ),
                   ),

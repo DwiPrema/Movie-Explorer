@@ -1,4 +1,5 @@
 import 'package:movie_explorer/core/constant/api_constant.dart';
+import 'package:movie_explorer/features/movie_detail/data/models/genre_model.dart';
 
 class MovieDetailModel {
   int movieId;
@@ -11,7 +12,7 @@ class MovieDetailModel {
   String? posterPath;
   String? backdropPath;
   double popularity;
-  String genres;
+  List<GenreModel> genres;
   String productionCountries;
   String status;
   String tagline;
@@ -45,7 +46,7 @@ class MovieDetailModel {
       posterPath: json["poster_path"],
       backdropPath: json["backdrop_path"],
       popularity: json["popularity"],
-      genres: (json["genres"] as List).map((e) => "${e["name"]}").join(", "),
+      genres: (json["genres"] as List).map((e) => GenreModel.fromJson(e),).toList(),
       productionCountries: (json["production_countries"] as List)
           .map((e) => "${e["iso_3166_1"]}-${e["name"]}")
           .join(", "),

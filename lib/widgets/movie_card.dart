@@ -14,12 +14,15 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          AppRoutes.toDetail,
-          arguments: movie.movieId,
-        );
-      },
+  Navigator.pushNamed(
+    context,
+    AppRoutes.toDetail,
+    arguments: {
+      'movieId': movie.movieId,
+      'genreId': movie.genres.isNotEmpty ? movie.genres.first : 28
+    },
+  );
+},
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Container(
