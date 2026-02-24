@@ -24,7 +24,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       );
 
       try {
-        final result = await _service.fetchByCategory(category);
+        final result = await _service.fetchMovieByCategory(category);
 
         final latestState = state as MovieStateData;
         emit(

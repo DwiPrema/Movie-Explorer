@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
 import 'package:movie_explorer/features/home_screen/data/services/service.dart';
+import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
 import 'package:movie_explorer/features/movie_detail/data/services/movie_detail_services.dart';
 import 'package:movie_explorer/features/movie_detail/presentation/view_model.dart';
 
@@ -22,8 +23,8 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
         final detail = await _service.detailMovie(movieId);
         final viewModel = MovieDetailViewModel.fromModel(detail);
 
-        final recByTopRated = await _serviceCategory.topRated();
-        final recByPopular = await _serviceCategory.popular();
+        final recByTopRated = await _serviceCategory.fetchMovieByCategory(MovieCategory.topRated);
+        final recByPopular = await _serviceCategory.fetchMovieByCategory(MovieCategory.popular);
 
         final recommended = [...recByPopular.results, ...recByTopRated.results]
             .where((movie) {
