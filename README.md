@@ -5,8 +5,9 @@ Movie Explorer is a Flutter application that allows users to explore movies usin
 This project is built as a learning project to practice Flutter, REST API integration, and BLoC state management.
 
 ## Features
-- Display popular movies
+- Display up-coming, now playing, popular and top rated movies
 - Movie detail page
+    - Recommended movie (Content-Based Recommendation System)
 - Loading handling
 - Clean architecture (core & features separation)
 - BLoC state management
