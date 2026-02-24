@@ -42,7 +42,6 @@ class DetailCard extends StatelessWidget {
                 // Movie info
                 Flexible(
                   flex: 1,
-                  child: Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -55,7 +54,6 @@ class DetailCard extends StatelessWidget {
                         _InfoText("Genres", state.detail.genresText),
                       ],
                     ),
-                  ),
                 ),
               ],
             );

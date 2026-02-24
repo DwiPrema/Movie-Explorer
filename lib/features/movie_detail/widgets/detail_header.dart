@@ -127,7 +127,6 @@ class DetailHeader extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       ReadmoreText(text: state.detail.overview),
-                      const SizedBox(height: 24),
                     ],
                   ),
                 ),

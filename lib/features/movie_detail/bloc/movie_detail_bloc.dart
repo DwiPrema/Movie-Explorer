@@ -22,10 +22,15 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
         final detail = await _service.detailMovie(movieId);
         final viewModel = MovieDetailViewModel.fromModel(detail);
 
-        final responseRec = await _serviceCategory.topRated();
-        final recommended = responseRec.results.where((movie) {
-          return movie.genres.contains(event.genreId);
-        }).toList();
+        final recByTopRated = await _serviceCategory.topRated();
+        final recByPopular = await _serviceCategory.popular();
+
+        final recommended = [...recByPopular.results, ...recByTopRated.results]
+            .where((movie) {
+              return movie.genres.any((id) => movie.genres.contains(id));
+            }).take(15).toList();
+
+        // final recommended = responseRec.results.where((movie) { // return movie.genres.contains(event.genreId); // }).toList();
 
         emit(MovieDetailSuccess(detail: viewModel, movies: recommended));
       } on SocketException {

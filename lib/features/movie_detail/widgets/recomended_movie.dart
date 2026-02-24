@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
+import 'package:movie_explorer/features/movie_detail/bloc/movie_detail_bloc.dart';
 import 'package:movie_explorer/widgets/carousel_card_test.dart';
+import 'package:movie_explorer/widgets/widget_text.dart';
 
 class RecommendedMovieSection extends StatelessWidget {
   final List<MovieModel> movies;
@@ -9,9 +12,35 @@ class RecommendedMovieSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselCardTest(
-      errorMessage: null,
-      movies: movies,
+    return Column(
+      children: [
+        CarouselCardTest(
+          errorMessage: null,
+          movies: movies,
+          textTitleCategory: "You Might Also Like",
+        ),
+      ],
+    );
+  }
+}
+
+class RecomendedMovie extends StatelessWidget {
+  const RecomendedMovie({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MovieDetailBloc, MovieDetailState>(
+      builder: (context, state) {
+        if (state is MovieDetailSuccess) {
+          return RecommendedMovieSection(movies: state.movies);
+        } else if (state is MovieDetailLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is MovieDetailError) {
+          return title("Sorry! Error");
+        } else {
+          return title("Sorry! Something Went Wrong !!!");
+        }
+      },
     );
   }
 }

@@ -28,7 +28,7 @@ class _ReadmoreTextState extends State<ReadmoreText> {
 
         final textPainter = TextPainter(
           text: textSpan,
-          maxLines: _isExpanded ? null : widget.trimLines,
+          maxLines: widget.trimLines,
           textDirection: TextDirection.ltr,
         )..layout(maxWidth: constraint.maxWidth);
 
