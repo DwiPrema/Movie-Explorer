@@ -16,6 +16,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     on<LoadMovie>((event, emit) async {
       final category = event.category;
 
+      if (state is! MovieStateData) return;
       final currentState = state as MovieStateData;
 
       emit(
@@ -27,40 +28,131 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       try {
         final result = await _service.fetchMovieByCategory(category);
 
-        final latestState = state as MovieStateData;
         emit(
-          latestState.copyWith(
+          currentState.copyWith(
             movies: {
-              ...latestState.movies,
+              ...currentState.movies,
               category: result.results.take(10).toList(),
             },
-            status: {...latestState.status, category: MovieStatus.success},
-            dates: {...latestState.dates, category: result.dates},
-            errorMessage: {...latestState.errorMessage, category: null},
+            status: {...currentState.status, category: MovieStatus.success},
+            dates: {...currentState.dates, category: result.dates},
+            errorMessage: {...currentState.errorMessage, category: null},
           ),
         );
       } on NetworkException catch (e) {
-        final latestState = state as MovieStateData;
         emit(
-          latestState.copyWith(
-            status: {...latestState.status, category: MovieStatus.error},
-            errorMessage: {...latestState.errorMessage, category: e.message},
+          currentState.copyWith(
+            status: {...currentState.status, category: MovieStatus.error},
+            errorMessage: {...currentState.errorMessage, category: e.message},
           ),
         );
       } on NotFoundException {
-        final latestState = state as MovieStateData;
         emit(
-          latestState.copyWith(
-            status: {...latestState.status, category: MovieStatus.error},
-            errorMessage: {...latestState.errorMessage, category: "Data Not Found !!!"},
+          currentState.copyWith(
+            status: {...currentState.status, category: MovieStatus.error},
+            errorMessage: {
+              ...currentState.errorMessage,
+              category: "Data Not Found !!!",
+            },
           ),
         );
       } catch (e) {
-        final latestState = state as MovieStateData;
         emit(
-          latestState.copyWith(
-            status: {...latestState.status, category: MovieStatus.error},
-            errorMessage: {...latestState.errorMessage, category: "Sorry! Unexpected Error"},
+          currentState.copyWith(
+            status: {...currentState.status, category: MovieStatus.error},
+            errorMessage: {
+              ...currentState.errorMessage,
+              category: "Sorry! Unexpected Error",
+            },
+          ),
+        );
+      }
+    });
+
+    on<LoadHomeScreen>((event, emit) async {
+      if (state is! MovieStateData) return;
+      final currentState = state as MovieStateData;
+
+      emit(
+        currentState.copyWith(
+          status: {
+            for (final c in MovieCategory.values) c: MovieStatus.loading,
+          },
+        ),
+      );
+
+      try {
+        final results = await Future.wait([
+          _service.fetchMovieByCategory(MovieCategory.upComing),
+          _service.fetchMovieByCategory(MovieCategory.nowPlaying),
+          _service.fetchMovieByCategory(MovieCategory.popular),
+          _service.fetchMovieByCategory(MovieCategory.topRated),
+        ]);
+
+        emit(
+          currentState.copyWith(
+            movies: {
+              ...currentState.movies,
+              MovieCategory.upComing: results[0].results.take(10).toList(),
+              MovieCategory.nowPlaying: results[1].results.take(10).toList(),
+              MovieCategory.popular: results[2].results.take(10).toList(),
+              MovieCategory.topRated: results[3].results.take(10).toList(),
+            },
+            dates: {
+              ...currentState.dates,
+              MovieCategory.upComing: results[0].dates,
+              MovieCategory.nowPlaying: results[1].dates,
+              MovieCategory.popular: results[2].dates,
+              MovieCategory.topRated: results[3].dates,
+            },
+            status: {
+              ...currentState.status,
+              for (final c in MovieCategory.values) c: MovieStatus.success,
+            },
+            errorMessage: {
+              ...currentState.errorMessage,
+              for (final c in MovieCategory.values) c: null,
+            },
+          ),
+        );
+      } on NetworkException {
+        emit(
+          currentState.copyWith(
+            status: {
+              ...currentState.status,
+              for (final c in MovieCategory.values) c: MovieStatus.error,
+            },
+            errorMessage: {
+              ...currentState.errorMessage,
+              for (final c in MovieCategory.values)
+                c: "Please check your connection !",
+            },
+          ),
+        );
+      } on NotFoundException {
+        emit(
+          currentState.copyWith(
+            status: {
+              ...currentState.status,
+              for (final c in MovieCategory.values) c: MovieStatus.error,
+            },
+            errorMessage: {
+              ...currentState.errorMessage,
+              for (final c in MovieCategory.values) c: "Page Not Found !",
+            },
+          ),
+        );
+      } catch (e) {
+        emit(
+          currentState.copyWith(
+            status: {
+              ...currentState.status,
+              for (final c in MovieCategory.values) c: MovieStatus.error,
+            },
+            errorMessage: {
+              ...currentState.errorMessage,
+              for (final c in MovieCategory.values) c: "Something Went Wrong !",
+            },
           ),
         );
       }

@@ -14,6 +14,7 @@ class CarouselCard extends StatelessWidget {
   final bool isDates;
   final bool isLoading;
   final String? errorMessage;
+  final void Function(MovieModel movie) onMovieTap;
 
   const CarouselCard({
     super.key,
@@ -24,6 +25,7 @@ class CarouselCard extends StatelessWidget {
     required this.movies,
     this.textTitleCategory,
     this.category,
+    required this.onMovieTap,
   });
 
   @override
@@ -56,15 +58,15 @@ class CarouselCard extends StatelessWidget {
                 ),
 
               (isDates)
-                ? Expanded(
-                  child: subtitle(
-                    dates ?? "",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    align: TextAlign.right,
-                  ),
-                )
-                : const SizedBox.shrink(),
+                  ? Expanded(
+                      child: subtitle(
+                        dates ?? "",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        align: TextAlign.right,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
             ],
           ),
         ),
@@ -73,7 +75,12 @@ class CarouselCard extends StatelessWidget {
           width: double.infinity,
           child: CarouselSlider(
             items: movies.where((m) => m.isValid).map((movie) {
-              return MovieCard(movie: movie);
+              return MovieCard(
+                movie: movie,
+                onTap: () {
+                  onMovieTap(movie);
+                },
+              );
             }).toList(),
             options: CarouselOptions(
               height: ResponsiveHelper.heightCarousel(screenWidth),

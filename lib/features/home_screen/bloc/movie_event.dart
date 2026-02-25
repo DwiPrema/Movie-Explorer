@@ -7,3 +7,6 @@ class LoadMovie extends MovieEvent {
 
   LoadMovie({required this.category});
 }
+
+class LoadHomeScreen extends MovieEvent {
+}

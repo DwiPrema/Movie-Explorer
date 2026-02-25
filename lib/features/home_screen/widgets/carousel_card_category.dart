@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_explorer/core/routes/app_routes.dart';
 import 'package:movie_explorer/features/home_screen/bloc/movie_bloc.dart';
 import 'package:movie_explorer/features/home_screen/data/models/movie_view_model.dart';
 import 'package:movie_explorer/features/home_screen/data/models/selector_category.dart';
@@ -21,7 +22,6 @@ class CarouselCardCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocSelector<MovieBloc, MovieState, MovieCategoryViewData>(
       selector: (state) => selectMovieCategory(state, category),
       builder: (context, state) {
@@ -33,6 +33,18 @@ class CarouselCardCategory extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           case MovieStatus.success:
             return CarouselCard(
+              onMovieTap: (movie) {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.toDetail,
+                  arguments: {
+                    'movieId': movie.movieId,
+                    'genreId': movie.genres.isNotEmpty
+                        ? movie.genres.first
+                        : 28,
+                  },
+                );
+              },
               isDates: isDates,
               dates: "${state.dates?.minimum} - ${state.dates?.maximum}",
               movies: state.movies,

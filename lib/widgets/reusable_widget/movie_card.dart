@@ -1,28 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:movie_explorer/core/constant/colors.dart';
-import 'package:movie_explorer/core/routes/app_routes.dart';
 import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
 import 'package:movie_explorer/widgets/image/app_cached_image.dart';
 import 'package:movie_explorer/widgets/reusable_widget/widget_text.dart';
 
 class MovieCard extends StatelessWidget {
   final MovieModel movie;
+  final GestureTapCallback onTap;
 
-  const MovieCard({super.key, required this.movie});
+  const MovieCard({super.key, required this.movie, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-  Navigator.pushNamed(
-    context,
-    AppRoutes.toDetail,
-    arguments: {
-      'movieId': movie.movieId,
-      'genreId': movie.genres.isNotEmpty ? movie.genres.first : 28
-    },
-  );
-},
+      onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Container(
@@ -35,7 +26,10 @@ class MovieCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppCachedImage(imageUrl: movie.posterUrl(size: "w342"), borderRadius: BorderRadius.circular(10),),
+                AppCachedImage(
+                  imageUrl: movie.posterUrl(size: "w342"),
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 const SizedBox(height: 5),
                 Expanded(
                   child: Column(

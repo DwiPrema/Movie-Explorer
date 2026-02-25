@@ -19,11 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<MovieBloc>()
-        ..add(LoadMovie(category: MovieCategory.upComing))
-        ..add(LoadMovie(category: MovieCategory.nowPlaying))
-        ..add(LoadMovie(category: MovieCategory.popular))
-        ..add(LoadMovie(category: MovieCategory.topRated));
+      context.read<MovieBloc>().add(LoadHomeScreen());
     });
   }
 
