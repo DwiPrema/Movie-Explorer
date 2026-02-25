@@ -6,7 +6,11 @@ final class MovieDetailInitial extends MovieDetailState {}
 
 final class MovieDetailLoading extends MovieDetailState {}
 
-final class MovieDetailError extends MovieDetailState {}
+final class MovieDetailError extends MovieDetailState {
+  String errMsg;
+
+  MovieDetailError({required this.errMsg});
+}
 
 final class MovieDetailSuccess extends MovieDetailState {
   final MovieDetailViewModel detail;

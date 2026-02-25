@@ -1,29 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_explorer/core/constant/colors.dart';
-import 'package:movie_explorer/features/movie_detail/bloc/movie_detail_bloc.dart';
+import 'package:movie_explorer/features/movie_detail/presentation/view_model.dart';
 import 'package:movie_explorer/widgets/image/app_cached_image.dart';
-import 'package:movie_explorer/widgets/reusable_widget/widget_text.dart';
 
 class DetailCard extends StatelessWidget {
-  const DetailCard({super.key});
+  final MovieDetailViewModel state;
+
+  const DetailCard({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: const Color(0xFF2A2A2A),
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: BlocBuilder<MovieDetailBloc, MovieDetailState>(
-          builder: (context, state) {
-            if (state is MovieDetailLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is MovieDetailSuccess) {
-              return Row(
+    return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -33,7 +20,7 @@ class DetailCard extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: AppCachedImage(
-                        imageUrl: state.detail.posterUrl,
+                        imageUrl: state.posterUrl,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -46,33 +33,24 @@ class DetailCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _InfoText("Original title", state.detail.originalTitle),
+                        _InfoText("Original title", state.originalTitle),
                         _InfoText(
                           "Original language",
-                          state.detail.originalLanguage,
+                          state.originalLanguage,
                         ),
-                        _InfoText("Released date", state.detail.releaseDate),
+                        _InfoText("Released date", state.releaseDate),
                         _InfoText(
                           "Production country",
-                          state.detail.productionCountriesText.toString(),
+                          state.productionCountriesText,
                         ),
-                        _InfoText("Status", state.detail.status),
-                        _InfoText("Tagline", state.detail.tagline),
-                        _InfoText("Genres", state.detail.genresText),
+                        _InfoText("Status", state.status),
+                        _InfoText("Tagline", state.tagline),
+                        _InfoText("Genres", state.genresText),
                       ],
                     ),
                   ),
                 ],
               );
-            } else if (state is MovieDetailError) {
-              return Center(child: title("Error"));
-            } else {
-              return Center(child: title("Something went wrong :("));
-            }
-          },
-        ),
-      ),
-    );
   }
 }
 

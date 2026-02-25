@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:bloc/bloc.dart';
+import 'package:movie_explorer/core/error/exceptions.dart';
 import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
 import 'package:movie_explorer/features/home_screen/data/services/service.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
@@ -23,25 +23,31 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
         final detail = await _service.detailMovie(movieId);
         final viewModel = MovieDetailViewModel.fromModel(detail);
 
-        final recByTopRated = await _serviceCategory.fetchMovieByCategory(MovieCategory.topRated);
-        final recByPopular = await _serviceCategory.fetchMovieByCategory(MovieCategory.popular);
+        final recByTopRated = await _serviceCategory.fetchMovieByCategory(
+          MovieCategory.topRated,
+        );
+        final recByPopular = await _serviceCategory.fetchMovieByCategory(
+          MovieCategory.popular,
+        );
 
         final recommended = [...recByPopular.results, ...recByTopRated.results]
             .where((movie) {
               return movie.genres.any((id) => movie.genres.contains(id));
-            }).take(15).toList();
+            })
+            .take(15)
+            .toList();
 
         // final recommended = responseRec.results.where((movie) { // return movie.genres.contains(event.genreId); // }).toList();
 
         emit(MovieDetailSuccess(detail: viewModel, movies: recommended));
-      } on SocketException {
-        print("socket");
-      } on FormatException {
-        print("format");
-      } on TypeError {
-        print("Type err");
+      } on NetworkException {
+        emit(MovieDetailError(errMsg: "Please check your connection !"));
+      } on NotFoundException {
+        emit(MovieDetailError(errMsg: "Sorry Page Not Found !"));
+      } on ServerException {
+        emit(MovieDetailError(errMsg: "Sorry Server Exception !"));
       } catch (e) {
-        emit(MovieDetailError());
+        emit(MovieDetailError(errMsg: "Something Went Wrong !"));
       }
     });
   }
