@@ -7,6 +7,7 @@ import 'package:movie_explorer/features/home_screen/data/models/movie_view_model
 import 'package:movie_explorer/features/home_screen/data/models/selector_category.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_status.dart';
+import 'package:movie_explorer/widgets/image/app_cached_image.dart';
 
 class CarouselImage extends StatefulWidget {
   final MovieCategory category;
@@ -47,27 +48,11 @@ class _CarouselImageState extends State<CarouselImage> {
                         .map((movie) {
                           return Padding(
                             padding: const EdgeInsets.all(16),
-                            child: ClipRRect(
+                            child: AppCachedImage(
+                              imageUrl: movie.backdropUrl(),
+                              width: double.infinity,
+                              fit: BoxFit.cover,
                               borderRadius: BorderRadius.circular(15),
-                              child: Image.network(
-                                movie.backdropUrl(),
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                alignment: Alignment.center,
-                                loadingBuilder: (context, child, progress) {
-                                  if (progress == null) return child;
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                },
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Icon(
-                                    Icons.broken_image,
-                                    size: 80,
-                                    color: AppColors.primaryColor,
-                                  );
-                                },
-                              ),
                             ),
                           );
                         })

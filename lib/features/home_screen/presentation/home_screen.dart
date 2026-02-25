@@ -4,7 +4,7 @@ import 'package:movie_explorer/features/home_screen/bloc/movie_bloc.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
 import 'package:movie_explorer/features/home_screen/widgets/carousel_card_category.dart';
 import 'package:movie_explorer/features/home_screen/widgets/carousel_backdrop.dart';
-import 'package:movie_explorer/widgets/widget_text.dart';
+import 'package:movie_explorer/widgets/reusable_widget/widget_text.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

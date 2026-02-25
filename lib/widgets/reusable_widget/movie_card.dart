@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_explorer/core/constant/colors.dart';
 import 'package:movie_explorer/core/routes/app_routes.dart';
 import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
-import 'package:movie_explorer/widgets/widget_text.dart';
+import 'package:movie_explorer/widgets/image/app_cached_image.dart';
+import 'package:movie_explorer/widgets/reusable_widget/widget_text.dart';
 
 class MovieCard extends StatelessWidget {
   final MovieModel movie;
@@ -35,12 +35,7 @@ class MovieCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: CachedNetworkImage(
-                    imageUrl: movie.posterUrl(size: "w342"),
-                  ),
-                ),
+                AppCachedImage(imageUrl: movie.posterUrl(size: "w342"), borderRadius: BorderRadius.circular(10),),
                 const SizedBox(height: 5),
                 Expanded(
                   child: Column(

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:movie_explorer/core/constant/api_constant.dart';
+import 'package:movie_explorer/core/error/exceptions.dart';
 
 class ApiClient {
   final Dio _dio = Dio(
@@ -21,7 +22,13 @@ class ApiClient {
       final response = await _dio.get(path, queryParameters: queryParams);
       return response;
     } on DioException catch (e) {
-      throw Exception("Ada kesalahan : $e");
+      if (e.type == DioExceptionType.connectionError) {
+        throw NetworkException("Please check your connection !");
+      } else if (e.response?.statusCode == 404) {
+        throw NotFoundException();
+      } else {
+        throw ServerException("Sorry!, Something Went Wrong !!!");
+      }
     }
   }
 }

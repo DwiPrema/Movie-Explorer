@@ -5,7 +5,7 @@ import 'package:movie_explorer/features/home_screen/data/models/movie_view_model
 import 'package:movie_explorer/features/home_screen/data/models/selector_category.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_status.dart';
-import 'package:movie_explorer/widgets/carousel_card.dart';
+import 'package:movie_explorer/widgets/reusable_widget/carousel_card.dart';
 
 class CarouselCardCategory extends StatelessWidget {
   final String textTitleCategory;

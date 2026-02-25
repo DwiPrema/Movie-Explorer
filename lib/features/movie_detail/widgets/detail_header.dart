@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_explorer/core/constant/colors.dart';
 import 'package:movie_explorer/core/routes/app_routes.dart';
 import 'package:movie_explorer/features/movie_detail/bloc/movie_detail_bloc.dart';
-import 'package:movie_explorer/widgets/readmore_text.dart';
-import 'package:movie_explorer/widgets/widget_text.dart';
+import 'package:movie_explorer/widgets/image/app_cached_image.dart';
+import 'package:movie_explorer/widgets/reusable_widget/readmore_text.dart';
+import 'package:movie_explorer/widgets/reusable_widget/widget_text.dart';
 
 class DetailHeader extends StatelessWidget {
   const DetailHeader({super.key});
@@ -23,8 +24,8 @@ class DetailHeader extends StatelessWidget {
                 child: Stack(
                   children: [
                     Positioned.fill(
-                      child: Image.network(
-                        state.detail.backdropUrl,
+                      child: AppCachedImage(
+                        imageUrl: state.detail.backdropUrl,
                         fit: BoxFit.cover,
                       ),
                     ),

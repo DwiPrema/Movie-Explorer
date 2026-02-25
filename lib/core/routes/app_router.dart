@@ -4,7 +4,7 @@ import 'package:movie_explorer/core/routes/app_routes.dart';
 import 'package:movie_explorer/features/home_screen/presentation/home_screen.dart';
 import 'package:movie_explorer/features/movie_detail/bloc/movie_detail_bloc.dart';
 import 'package:movie_explorer/features/movie_detail/presentation/movie_detail.dart';
-import 'package:movie_explorer/widgets/widget_text.dart';
+import 'package:movie_explorer/widgets/reusable_widget/widget_text.dart';
 
 class AppRouter {
   static Route<dynamic>? generate(RouteSettings settings) {

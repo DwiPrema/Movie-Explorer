@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:movie_explorer/core/error/exceptions.dart';
 import 'package:movie_explorer/features/home_screen/data/models/date_range_model.dart';
 import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
 import 'package:movie_explorer/features/home_screen/data/services/service.dart';
@@ -31,32 +32,35 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
           latestState.copyWith(
             movies: {
               ...latestState.movies,
-              category: result.results.take(10).toList()
-              },
-            status: {
-              ...latestState.status,
-              category: MovieStatus.success
-              },
-            dates: {
-              ...latestState.dates,
-              category: result.dates
-              },
-            errorMessage: {
-              ...latestState.errorMessage,
-              category: null
-              },
+              category: result.results.take(10).toList(),
+            },
+            status: {...latestState.status, category: MovieStatus.success},
+            dates: {...latestState.dates, category: result.dates},
+            errorMessage: {...latestState.errorMessage, category: null},
+          ),
+        );
+      } on NetworkException catch (e) {
+        final latestState = state as MovieStateData;
+        emit(
+          latestState.copyWith(
+            status: {...latestState.status, category: MovieStatus.error},
+            errorMessage: {...latestState.errorMessage, category: e.message},
+          ),
+        );
+      } on NotFoundException {
+        final latestState = state as MovieStateData;
+        emit(
+          latestState.copyWith(
+            status: {...latestState.status, category: MovieStatus.error},
+            errorMessage: {...latestState.errorMessage, category: "Data Not Found !!!"},
           ),
         );
       } catch (e) {
         final latestState = state as MovieStateData;
         emit(
           latestState.copyWith(
-            status: {
-              ...latestState.status,
-              category: MovieStatus.error},
-            errorMessage: {
-              ...latestState.errorMessage,
-              category: e.toString()},
+            status: {...latestState.status, category: MovieStatus.error},
+            errorMessage: {...latestState.errorMessage, category: "Sorry! Unexpected Error"},
           ),
         );
       }
