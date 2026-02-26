@@ -7,21 +7,19 @@ class ErrorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Image.asset(
-                "assets/images/ilustration.png",
-                width: MediaQuery.of(context).size.width * 0.7,
-              ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Image.asset(
+              "assets/images/ilustration.png",
+              width: MediaQuery.of(context).size.width * 0.7,
             ),
-            const SizedBox(height: 50),
-            title(errMsg),
-          ],
-        ),
+          ),
+          const SizedBox(height: 50),
+          title(errMsg),
+        ],
       ),
     );
   }

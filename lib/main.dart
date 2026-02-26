@@ -6,12 +6,17 @@ import 'package:movie_explorer/core/routes/app_routes.dart';
 import 'package:movie_explorer/features/home_screen/bloc/movie_bloc.dart';
 import 'package:movie_explorer/features/home_screen/presentation/home_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_explorer/features/search_screen/bloc/search_bloc.dart';
+import 'package:movie_explorer/features/search_screen/presentation/search_screen.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
   runApp(
-    BlocProvider(
-      create: (context) => MovieBloc(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => MovieBloc()),
+        BlocProvider(create: (_) => SearchBloc()),
+      ],
       child: const MovieExplorer(),
     ),
   );
@@ -60,9 +65,8 @@ class _MovieExplorerState extends State<MovieExplorer> {
 
   @override
   Widget build(BuildContext context) {
-    double itemWidth = MediaQuery.of(context).size.width / 3;
+    double itemWidth = MediaQuery.of(context).size.width / 2;
     double indicatorWidth = 70;
-
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -72,91 +76,82 @@ class _MovieExplorerState extends State<MovieExplorer> {
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.bgColor,
         body: SafeArea(
-          child: Stack(
-            children: [
-              IndexedStack(
-                index: _currentIndex,
-                children: const [
-                  HomeScreen(),
-                  Center(child: Text('Search Screen')),
-                  Center(child: Text('Profile Screen')),
-                ],
-              ),
-
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  height: 64,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0xff2A0002),
-                        blurRadius: 10,
-                        spreadRadius: 1,
+          child: SizedBox.expand(
+            child: Stack(
+              children: [
+                IndexedStack(
+                  index: _currentIndex,
+                  children: const [HomeScreen(), SearchScreen()],
+                ),
+            
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    height: 64,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: const BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
                       ),
-                    ],
-                  ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      AnimatedPositioned(
-                        duration: const Duration(milliseconds: 500),
-                        top: 0,
-                        curve: Curves.easeOut,
-                        left:
-                            itemWidth * _currentIndex +
-                            (itemWidth / 2) -
-                            (indicatorWidth / 2),
-                        child: Container(
-                          width: indicatorWidth,
-                          height: 5,
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryColor,
-                            borderRadius: BorderRadius.circular(100),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xff2A0002),
+                          blurRadius: 10,
+                          spreadRadius: 1,
+                        ),
+                      ],
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        AnimatedPositioned(
+                          duration: const Duration(milliseconds: 500),
+                          top: 0,
+                          curve: Curves.easeOut,
+                          left:
+                              itemWidth * _currentIndex +
+                              (itemWidth / 2) -
+                              (indicatorWidth / 2),
+                          child: Container(
+                            width: indicatorWidth,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.circular(100),
+                            ),
                           ),
                         ),
-                      ),
-
-                      Align(
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              child: _navItem(
-                                icon: Icons.home_rounded,
-                                label: "Home",
-                                index: 0,
+            
+                        Align(
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: _navItem(
+                                  icon: Icons.home_rounded,
+                                  label: "Home",
+                                  index: 0,
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: _navItem(
-                                icon: Icons.search_rounded,
-                                label: "Search",
-                                index: 1,
+                              Expanded(
+                                child: _navItem(
+                                  icon: Icons.search_rounded,
+                                  label: "Search",
+                                  index: 1,
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: _navItem(
-                                icon: Icons.person,
-                                label: "Profile",
-                                index: 2,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

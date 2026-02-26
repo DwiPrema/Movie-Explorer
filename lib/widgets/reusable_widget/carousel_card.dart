@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_explorer/core/utils/responsive_helper.dart';
-import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
+import 'package:movie_explorer/core/models/movie_model.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
 import 'package:movie_explorer/widgets/reusable_widget/movie_card.dart';
 import 'package:movie_explorer/widgets/reusable_widget/widget_text.dart';

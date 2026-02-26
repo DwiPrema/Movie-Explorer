@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:movie_explorer/core/error/exceptions.dart';
-import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
+import 'package:movie_explorer/core/models/movie_model.dart';
 import 'package:movie_explorer/features/home_screen/data/services/service.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
 import 'package:movie_explorer/features/movie_detail/data/services/movie_detail_services.dart';

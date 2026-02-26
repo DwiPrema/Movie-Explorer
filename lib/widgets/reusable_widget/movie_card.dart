@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_explorer/core/constant/colors.dart';
-import 'package:movie_explorer/features/home_screen/data/models/movie_model.dart';
+import 'package:movie_explorer/core/models/movie_model.dart';
 import 'package:movie_explorer/widgets/image/app_cached_image.dart';
 import 'package:movie_explorer/widgets/reusable_widget/widget_text.dart';
 
