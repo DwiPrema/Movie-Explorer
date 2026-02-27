@@ -4,7 +4,7 @@ import 'package:movie_explorer/core/models/movie_model.dart';
 import 'package:movie_explorer/features/home_screen/data/services/service.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
 import 'package:movie_explorer/features/movie_detail/data/services/movie_detail_services.dart';
-import 'package:movie_explorer/features/movie_detail/presentation/view_model.dart';
+import 'package:movie_explorer/core/view_model/view_model.dart';
 
 part 'movie_detail_event.dart';
 part 'movie_detail_state.dart';
@@ -36,8 +36,6 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
             })
             .take(15)
             .toList();
-
-        // final recommended = responseRec.results.where((movie) { // return movie.genres.contains(event.genreId); // }).toList();
 
         emit(MovieDetailSuccess(detail: viewModel, movies: recommended));
       } on NetworkException {

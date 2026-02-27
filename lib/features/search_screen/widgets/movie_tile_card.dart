@@ -4,7 +4,7 @@ class MovieTileCard extends StatelessWidget {
   final String title;
   final String posterUrl;
   final List<String> genres;
-  final double popularity;
+  final String popularity;
 
   const MovieTileCard({
     super.key,
@@ -25,7 +25,6 @@ class MovieTileCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Poster
           ClipRRect(
             borderRadius: BorderRadius.circular(14),
             child: Image.network(
@@ -79,7 +78,7 @@ class MovieTileCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      '${popularity.toStringAsFixed(3)} popularity',
+                      '$popularity popularity',
                       style: const TextStyle(
                         color: Colors.white70,
                         fontSize: 14,

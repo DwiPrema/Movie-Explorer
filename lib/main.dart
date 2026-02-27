@@ -3,6 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movie_explorer/core/constant/colors.dart';
 import 'package:movie_explorer/core/routes/app_router.dart';
 import 'package:movie_explorer/core/routes/app_routes.dart';
+import 'package:movie_explorer/features/genres_features/bloc/genres_bloc.dart';
+import 'package:movie_explorer/features/genres_features/bloc/genres_event.dart';
 import 'package:movie_explorer/features/home_screen/bloc/movie_bloc.dart';
 import 'package:movie_explorer/features/home_screen/presentation/home_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,8 +16,9 @@ Future<void> main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => MovieBloc()),
-        BlocProvider(create: (_) => SearchBloc()),
+        BlocProvider(create: (_) => GenreBloc()..add(LoadGenres())),
+        BlocProvider(create: (context) => MovieBloc(context.read<GenreBloc>())),
+        BlocProvider(create: (context) => SearchBloc(genreBloc: context.read<GenreBloc>())),
       ],
       child: const MovieExplorer(),
     ),

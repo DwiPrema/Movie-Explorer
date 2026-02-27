@@ -19,16 +19,24 @@ class ApiClient {
     Map<String, dynamic>? queryParams,
   }) async {
     try {
-      final response = await _dio.get(path, queryParameters: queryParams);
-      return response;
+      return await _dio.get(path, queryParameters: queryParams);
     } on DioException catch (e) {
       if (e.type == DioExceptionType.connectionError) {
         throw NetworkException("Please check your connection !");
-      } else if (e.response?.statusCode == 404) {
-        throw NotFoundException();
-      } else {
-        throw ServerException("Sorry!, Something Went Wrong !!!");
       }
+
+      if (e.type == DioExceptionType.badResponse) {
+        final status = e.response?.statusCode;
+
+        if (status == 404) throw NotFoundException();
+        if (status == 401 || status == 403) {
+          throw ServerException("Unauthorized");
+        }
+
+        throw ServerException("Server Error ($status)");
+      }
+
+      throw ServerException("Unexpected Error");
     }
   }
 }

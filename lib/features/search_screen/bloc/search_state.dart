@@ -1,4 +1,4 @@
-import 'package:movie_explorer/features/movie_detail/data/models/movie_detail_model.dart';
+import 'package:movie_explorer/core/view_model/view_model.dart';
 
 class SearchState {}
 
@@ -13,7 +13,7 @@ class SearchError extends SearchState {
 }
 
 class SearchLoaded extends SearchState {
-  List<MovieDetailModel> searchResults;
+  List<MovieDetailViewModel> searchResults;
 
   SearchLoaded({required this.searchResults});
 }

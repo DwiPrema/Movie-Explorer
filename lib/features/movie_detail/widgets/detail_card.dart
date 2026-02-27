@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_explorer/core/constant/colors.dart';
-import 'package:movie_explorer/features/movie_detail/presentation/view_model.dart';
+import 'package:movie_explorer/core/view_model/view_model.dart';
 import 'package:movie_explorer/widgets/image/app_cached_image.dart';
 
 class DetailCard extends StatelessWidget {

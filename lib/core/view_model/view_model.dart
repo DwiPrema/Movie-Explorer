@@ -1,7 +1,6 @@
 import 'package:movie_explorer/features/movie_detail/data/models/movie_detail_model.dart';
 
 class MovieDetailViewModel {
-  // ====== UI DISPLAY (String only) ======
   final String title;
   final String originalTitle;
   final String releaseDate;
@@ -15,11 +14,10 @@ class MovieDetailViewModel {
   final String genresText;
   final String productionCountriesText;
 
-  // ====== LOGIC SUPPORT (not for direct UI) ======
   final int movieId;
   final List<int> genreIds;
+  final List<String> genreNames;
 
-  // ====== UI HELPERS ======
   final bool hasGenres;
   final bool hasTagline;
 
@@ -38,16 +36,24 @@ class MovieDetailViewModel {
     required this.genresText,
     required this.productionCountriesText,
     required this.genreIds,
+    required this.genreNames,
     required this.hasGenres,
     required this.hasTagline,
   });
 
-  /// ====== FACTORY: Model -> ViewModel ======
-  factory MovieDetailViewModel.fromModel(MovieDetailModel model) {
-    final genreNames = model.genres.map((g) => g.name).toList();
+  factory MovieDetailViewModel.fromModel(
+    MovieDetailModel model, {
+    List<String> genreNames = const [],
+  }) {
+
+    final names = genreNames.isNotEmpty
+    ? genreNames
+    : model.genres.map((g) => g.name).toList();
+
     final genreIds = model.genres.map((g) => g.id).toList();
 
-    return MovieDetailViewModel(
+    return 
+    MovieDetailViewModel(
       movieId: model.movieId,
       title: model.title,
       originalTitle: model.originalTitle,
@@ -59,10 +65,11 @@ class MovieDetailViewModel {
       posterUrl: model.posterUrl(),
       popularity: model.popularity.toString(),
       backdropUrl: model.backdropUrl(),
-      genresText: genreNames.join(", "),
+      genresText: names.join(", "),
       productionCountriesText: model.productionCountries,
       genreIds: genreIds,
-      hasGenres: genreNames.isNotEmpty,
+      genreNames: names,
+      hasGenres: names.isNotEmpty,
       hasTagline: (model.tagline).isNotEmpty,
     );
   }

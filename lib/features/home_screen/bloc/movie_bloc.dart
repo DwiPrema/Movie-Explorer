@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:movie_explorer/core/error/exceptions.dart';
+import 'package:movie_explorer/features/genres_features/bloc/genres_bloc.dart';
 import 'package:movie_explorer/features/home_screen/data/models/date_range_model.dart';
 import 'package:movie_explorer/core/models/movie_model.dart';
 import 'package:movie_explorer/features/home_screen/data/services/service.dart';
@@ -11,8 +12,9 @@ part 'movie_state.dart';
 
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   final MovieService _service = MovieService();
+  final GenreBloc genreBloc;
 
-  MovieBloc() : super(MovieStateData.initial()) {
+  MovieBloc(this.genreBloc) : super(MovieStateData.initial()) {
     on<LoadMovie>((event, emit) async {
       final category = event.category;
 

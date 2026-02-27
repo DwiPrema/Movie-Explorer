@@ -16,77 +16,80 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  bool _isSearching = false;
   final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AppBar(
-          title: _isSearching
-              ? TextField(
-                  onChanged: (value) {
-                    context.read<SearchBloc>().add(
-                      DisplaySearchedMovie(query: value),
-                    );
-                  },
-                  controller: _searchController,
-                  autofocus: true,
-                  decoration: const InputDecoration(
-                    hintText: "Search Movie...",
-                    border: InputBorder.none,
-                  ),
-                )
-              : const SizedBox.shrink(),
-
-          actions: [
-            IconButton(
-              icon: Icon(_isSearching ? Icons.close : Icons.search),
-              onPressed: () {
-                setState(() {
-                  _isSearching = !_isSearching;
-                  if (!_isSearching) {
-                    _searchController.clear();
-                  }
-                });
-              },
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: const Color(0xff303030),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              width: MediaQuery.of(context).size.width,
+              child: TextField(
+                onChanged: (value) {
+                  context.read<SearchBloc>().add(
+                    DisplaySearchedMovie(query: value),
+                  );
+                },
+                controller: _searchController,
+                autofocus: true,
+                decoration: const InputDecoration(
+                  hintText: "Search Movie...",
+                  border: InputBorder.none,
+                ),
+              ),
             ),
           ],
         ),
 
-        BlocBuilder<SearchBloc, SearchState>(
-          builder: (context, state) {
-            if (state is SearchInitial) {
-              Center(
-                child: subtitle("Type to search...", color: AppColors.white),
-              );
-            }
+        Expanded(
+          child: BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              if (state is SearchInitial) {
+                return Center(
+                  child: subtitle("Type to search...", color: AppColors.white),
+                );
+              }
 
-            if (state is SearchLoading) {
-              const Center(child: CircularProgressIndicator());
-            }
+              if (state is SearchLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-            if (state is SearchLoaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final movie = state.searchResults[index];
-                  return MovieTileCard(
-                    title: movie.title,
-                    posterUrl: movie.posterUrl(size: "w324"),
-                    genres: movie.genreNames(),
-                    popularity: movie.popularity,
-                  );
-                },
-              );
-            }
+              if (state is SearchLoaded) {
+                return ListView.builder(
+                  itemCount: state.searchResults.length,
+                  itemBuilder: (context, index) {
+                    final movie = state.searchResults[index];
 
-            if (state is SearchError) {
-              return ErrorPage(errMsg: state.errMsg);
-            }
+                    return MovieTileCard(
+                      title: movie.title,
+                      posterUrl: movie.posterUrl,
+                      genres: movie.genreNames,
+                      popularity: movie.popularity,
+                    );
+                  },
+                );
+              }
 
-            return const SizedBox.shrink();
-          },
+              if (state is SearchError) {
+                return ErrorPage(errMsg: state.errMsg);
+              }
+
+              return const SizedBox.shrink();
+            },
+          ),
         ),
       ],
     );

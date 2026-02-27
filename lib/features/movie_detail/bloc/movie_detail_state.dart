@@ -16,5 +16,5 @@ final class MovieDetailSuccess extends MovieDetailState {
   final MovieDetailViewModel detail;
   final List<MovieModel> movies;
 
-  MovieDetailSuccess({required this.detail, required this.movies});
+  MovieDetailSuccess({required this.detail, required this.movies,});
 }
