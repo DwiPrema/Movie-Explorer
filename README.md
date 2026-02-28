@@ -7,7 +7,9 @@ This project is built as a learning project to practice Flutter, REST API integr
 ## Features
 - Display up-coming, now playing, popular and top rated movies
 - Movie detail page
+    - Detail Movie
     - Recommended movie (Content-Based Recommendation System)
+- Search Movie
 - Loading handling
 - Clean architecture (core & features separation)
 - BLoC state management
@@ -28,10 +30,18 @@ This project is built as a learning project to practice Flutter, REST API integr
 lib/
 ├── core/
 │   ├── constant/
+│   ├── error/
+│   ├── models/
 │   ├── network/
 │   ├── routes/
-│   └── utils/
+│   ├── utils/
+│   └── view_model/
 ├── features/
+│   ├── genres_features/
+│   │   ├── bloc/
+│   │   └── data/
+│   │       ├── model/
+│   │       └── services/
 │   ├── home_screen/
 │   │   ├── bloc/
 │   │   ├── data/
@@ -40,14 +50,23 @@ lib/
 │   │   ├── domain/
 │   │   ├── presentation/
 │   │   └── widgets/
-│   └── movie_detail/
+│   ├── movie_detail/
+│   │   ├── bloc/
+│   │   ├── data/
+│   │   │   ├── models/
+│   │   │   └── services/
+│   │   ├── presentation/
+│   │   └── widgets/
+│   └── search_screen/
 │       ├── bloc/
 │       ├── data/
-│       │   ├── models/
 │       │   └── services/
 │       ├── presentation/
 │       └── widgets/
-├── widgets/
+├── widgets
+    ├── error_widget/
+    ├── image/
+    └── reusable_widget/
 └── main.dart
 ```
 ## Screenshots
@@ -56,6 +75,5 @@ lib/
 ## Project Status
 🚧 In Progress  
 Planned features:
-- Error handling
-- Search movie
 - Favorite movie
+- Find by genre
