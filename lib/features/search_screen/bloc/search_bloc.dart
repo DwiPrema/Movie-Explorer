@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:movie_explorer/core/error/exceptions.dart';
 import 'package:movie_explorer/features/genres_features/bloc/genres_bloc.dart';
 import 'package:movie_explorer/features/genres_features/bloc/genres_state.dart';
 import 'package:movie_explorer/core/view_model/view_model.dart';
@@ -73,9 +74,20 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         return MovieDetailViewModel.fromModel(movie, genreNames: genreNames);
       }).toList();
 
+      if (results.isEmpty) {
+        emit(SearchEmpty(message: "Movie not found for \"$query\" "));
+        return;
+      }
+
       emit(SearchLoaded(searchResults: results));
+    } on NetworkException {
+      emit(SearchError(errMsg: "Please check your connection !"));
+    } on NotFoundException {
+      emit(SearchError(errMsg: "Sorry Page Not Found !"));
+    } on ServerException {
+      emit(SearchError(errMsg: "Sorry Server Exception !"));
     } catch (e) {
-      emit(SearchError(errMsg: 'Something went wrong'));
+      emit(SearchError(errMsg: "Something Went Wrong !"));
     }
   }
 }

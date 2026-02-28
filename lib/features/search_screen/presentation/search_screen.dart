@@ -65,6 +65,7 @@ class _SearchScreenState extends State<SearchScreen> {
             buildWhen: (prev, curr) =>
                 curr is SearchInitial ||
                 curr is SearchLoading ||
+                curr is SearchEmpty ||
                 curr is SearchLoaded ||
                 curr is SearchError,
             builder: (context, state) {
@@ -82,6 +83,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     return const RepaintBoundary(child: LoadingSearchWidget());
                   },
                 );
+              }
+
+              if (state is SearchEmpty) {
+                return subtitle(state.message, color: AppColors.white);
               }
 
               if (state is SearchLoaded) {

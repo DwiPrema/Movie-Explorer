@@ -17,3 +17,8 @@ class SearchLoaded extends SearchState {
 
   SearchLoaded({required this.searchResults});
 }
+
+class SearchEmpty extends SearchState {
+  final String message;
+  SearchEmpty({this.message = 'No movie found'});
+}
