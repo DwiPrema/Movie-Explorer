@@ -1,8 +1,5 @@
-// lib/core/widgets/image/app_cached_image.dart
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_explorer/core/constant/colors.dart';
 
 class AppCachedImage extends StatelessWidget {
   final String imageUrl;
@@ -10,6 +7,7 @@ class AppCachedImage extends StatelessWidget {
   final double? height;
   final BoxFit fit;
   final BorderRadius? borderRadius;
+  final AspectRatio aspectRatio;
 
   const AppCachedImage({
     super.key,
@@ -18,41 +16,41 @@ class AppCachedImage extends StatelessWidget {
     this.height,
     this.fit = BoxFit.cover,
     this.borderRadius,
+    required this.aspectRatio,
   });
 
   @override
   Widget build(BuildContext context) {
-    final image = CachedNetworkImage(
-      imageUrl: imageUrl,
-      width: width,
-      height: height,
-      fit: fit,
-      placeholder: (context, url) => const _ImageLoading(),
-      errorWidget: (context, url, error) => const _ImageError(),
+    final image = AspectRatio(
+      aspectRatio: aspectRatio.aspectRatio,
+      child: CachedNetworkImage(
+        imageUrl: imageUrl,
+        width: width,
+        height: height,
+        fit: fit,
+        placeholder: (context, url) => const _ImageLoading(),
+        errorWidget: (context, url, error) => const _ImageError(),
+      ),
     );
 
     if (borderRadius != null) {
-      return ClipRRect(
-        borderRadius: borderRadius!,
-        child: image,
-      );
+      return ClipRRect(borderRadius: borderRadius!, child: image);
     }
 
     return image;
   }
 }
 
-
-//Loading Image
 class _ImageLoading extends StatelessWidget {
   const _ImageLoading();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.transparent,
-      child: const Center(
-        child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.white,),
+    return SizedBox.expand(
+      child: Image.asset(
+        "assets/images/image_placeholder.jpg",
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
       ),
     );
   }
@@ -66,10 +64,7 @@ class _ImageError extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey.shade200,
-      child: const Icon(
-        Icons.broken_image_outlined,
-        color: Colors.grey,
-      ),
+      child: const Icon(Icons.broken_image_outlined, color: Colors.grey),
     );
   }
 }

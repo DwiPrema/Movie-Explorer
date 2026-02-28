@@ -30,7 +30,12 @@ class CarouselCardCategory extends StatelessWidget {
           case MovieStatus.initial:
             return const Center(child: CircularProgressIndicator());
           case MovieStatus.loading:
-            return const Center(child: CircularProgressIndicator());
+            return CarouselCard(
+              onMovieTap: (movie) {},
+              isDates: isDates,
+              movies: state.movies,
+              textTitleCategory: textTitleCategory,
+            );
           case MovieStatus.success:
             return CarouselCard(
               onMovieTap: (movie) {

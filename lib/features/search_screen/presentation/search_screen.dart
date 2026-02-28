@@ -4,6 +4,7 @@ import 'package:movie_explorer/core/constant/colors.dart';
 import 'package:movie_explorer/features/search_screen/bloc/search_bloc.dart';
 import 'package:movie_explorer/features/search_screen/bloc/search_event.dart';
 import 'package:movie_explorer/features/search_screen/bloc/search_state.dart';
+import 'package:movie_explorer/features/search_screen/presentation/loading_search_widget.dart';
 import 'package:movie_explorer/features/search_screen/widgets/movie_tile_card.dart';
 import 'package:movie_explorer/widgets/error_widget/error_widget.dart';
 import 'package:movie_explorer/widgets/reusable_widget/widget_text.dart';
@@ -28,34 +29,43 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xff303030),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              width: MediaQuery.of(context).size.width,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: const Color(0xff303030),
+              borderRadius: BorderRadius.circular(100),
+            ),
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
                 onChanged: (value) {
                   context.read<SearchBloc>().add(
                     DisplaySearchedMovie(query: value),
                   );
                 },
+                style: const TextStyle(color: AppColors.white, fontSize: 14),
                 controller: _searchController,
-                autofocus: true,
                 decoration: const InputDecoration(
+                  icon: Icon(Icons.search, color: AppColors.grey),
                   hintText: "Search Movie...",
                   border: InputBorder.none,
                 ),
               ),
             ),
-          ],
+          ),
         ),
+
+        const SizedBox(height: 8),
 
         Expanded(
           child: BlocBuilder<SearchBloc, SearchState>(
+            buildWhen: (prev, curr) =>
+                curr is SearchInitial ||
+                curr is SearchLoading ||
+                curr is SearchLoaded ||
+                curr is SearchError,
             builder: (context, state) {
               if (state is SearchInitial) {
                 return Center(
@@ -64,20 +74,29 @@ class _SearchScreenState extends State<SearchScreen> {
               }
 
               if (state is SearchLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 50),
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return const RepaintBoundary(child: LoadingSearchWidget());
+                  },
+                );
               }
 
               if (state is SearchLoaded) {
                 return ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 50),
                   itemCount: state.searchResults.length,
                   itemBuilder: (context, index) {
                     final movie = state.searchResults[index];
 
-                    return MovieTileCard(
-                      title: movie.title,
-                      posterUrl: movie.posterUrl,
-                      genres: movie.genreNames,
-                      popularity: movie.popularity,
+                    return RepaintBoundary(
+                      child: MovieTileCard(
+                        titleMovie: movie.title,
+                        posterUrl: movie.posterUrl,
+                        genres: movie.genreNames,
+                        popularity: movie.popularity,
+                      ),
                     );
                   },
                 );

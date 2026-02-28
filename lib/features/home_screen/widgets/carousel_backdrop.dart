@@ -7,6 +7,7 @@ import 'package:movie_explorer/features/home_screen/data/models/movie_view_model
 import 'package:movie_explorer/features/home_screen/data/models/selector_category.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_category.dart';
 import 'package:movie_explorer/features/home_screen/domain/movie_status.dart';
+import 'package:movie_explorer/widgets/error_widget/error_widget.dart';
 import 'package:movie_explorer/widgets/image/app_cached_image.dart';
 
 class CarouselImage extends StatefulWidget {
@@ -31,7 +32,36 @@ class _CarouselImageState extends State<CarouselImage> {
           case MovieStatus.initial:
             return const Center(child: CircularProgressIndicator());
           case MovieStatus.loading:
-            return const Center(child: CircularProgressIndicator());
+            return Column(
+              children: [
+                const AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                  child: Center(child: CircularProgressIndicator()),),
+                ),
+
+                const SizedBox(height: 16),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(5, (index) {
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      width: _currentIndex == index ? 25 : 10,
+                      height: 10,
+                      margin: const EdgeInsets.symmetric(horizontal: 7),
+                      decoration: BoxDecoration(
+                        color: _currentIndex == index
+                            ? AppColors.primaryColor
+                            : AppColors.white.withAlpha(100),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            );
           case MovieStatus.success:
             return Column(
               children: [
@@ -49,6 +79,9 @@ class _CarouselImageState extends State<CarouselImage> {
                           return Padding(
                             padding: const EdgeInsets.all(16),
                             child: AppCachedImage(
+                              aspectRatio: const AspectRatio(
+                                aspectRatio: 16 / 9,
+                              ),
                               imageUrl: movie.backdropUrl(),
                               width: double.infinity,
                               fit: BoxFit.cover,
@@ -90,7 +123,7 @@ class _CarouselImageState extends State<CarouselImage> {
               ],
             );
           case MovieStatus.error:
-            return Text(state.errorMessage ?? "Something went wrong :(");
+            return ErrorPage(errMsg: state.errorMessage ?? "Something Went Wrong !");
         }
       },
     );

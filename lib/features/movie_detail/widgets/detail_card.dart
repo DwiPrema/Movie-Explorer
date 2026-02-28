@@ -29,6 +29,7 @@ class DetailCard extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: AppCachedImage(
+                              aspectRatio: const AspectRatio(aspectRatio: 2/3),
                               imageUrl: state.posterUrl,
                               fit: BoxFit.cover,
                             ),
