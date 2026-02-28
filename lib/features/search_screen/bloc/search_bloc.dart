@@ -43,7 +43,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   ) async {
     final query = event.query.trim();
 
-    if (query == _latestQuery) return;
+    if (query == _latestQuery && state is! SearchError) return;
     _latestQuery = query;
 
     if (query.isEmpty) {
@@ -81,12 +81,16 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
       emit(SearchLoaded(searchResults: results));
     } on NetworkException {
+      _latestQuery = '';
       emit(SearchError(errMsg: "Please check your connection !"));
     } on NotFoundException {
+      _latestQuery = '';
       emit(SearchError(errMsg: "Sorry Page Not Found !"));
     } on ServerException {
+      _latestQuery = '';
       emit(SearchError(errMsg: "Sorry Server Exception !"));
     } catch (e) {
+      _latestQuery = '';
       emit(SearchError(errMsg: "Something Went Wrong !"));
     }
   }

@@ -19,7 +19,7 @@ class AppRouter {
           builder: (_) => BlocProvider(
             create: (_) => MovieDetailBloc()
               ..add(LoadDetail(movieId: movieId, genreId: genreId)),
-            child: MovieDetail(movieId: movieId),
+            child: MovieDetail(movieId: movieId, genreId: genreId,),
           ),
         );
 

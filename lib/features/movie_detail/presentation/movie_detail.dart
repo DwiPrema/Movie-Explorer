@@ -9,7 +9,8 @@ import 'package:movie_explorer/widgets/error_widget/error_widget.dart';
 
 class MovieDetail extends StatefulWidget {
   final int movieId;
-  const MovieDetail({super.key, required this.movieId});
+  final int genreId;
+  const MovieDetail({super.key, required this.movieId, required this.genreId});
 
   @override
   State<MovieDetail> createState() => _MovieDetailState();
@@ -22,34 +23,58 @@ class _MovieDetailState extends State<MovieDetail> {
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.bgColor,
       body: SafeArea(
-        child: BlocBuilder<MovieDetailBloc, MovieDetailState>(
-          builder: (context, state) {
-            if (state is MovieDetailSuccess) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    DetailHeader(state: state.detail),
-                    const SizedBox(height: 38),
-                    DetailCard(state: state.detail),
-                    const SizedBox(height: 50),
-                    RecommendedMovieSection(movies: state.movies),
-                    const SizedBox(),
-                  ],
-                ),
-              );
-            } else if (state is MovieDetailLoading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  color: AppColors.white,
-                ),
-              );
-            } else if (state is MovieDetailError) {
-              return ErrorPage(errMsg: state.errMsg);
-            } else {
-              return const ErrorPage(errMsg: "Something Went Wrong !");
-            }
+        child: RefreshIndicator(
+          onRefresh: () async {
+            context.read<MovieDetailBloc>().add(
+              LoadDetail(movieId: widget.movieId, genreId: widget.genreId),
+            );
           },
+          child: BlocBuilder<MovieDetailBloc, MovieDetailState>(
+            builder: (context, state) {
+              if (state is MovieDetailSuccess) {
+                return ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      DetailHeader(state: state.detail),
+                      const SizedBox(height: 38),
+                      DetailCard(state: state.detail),
+                      const SizedBox(height: 50),
+                      RecommendedMovieSection(movies: state.movies),
+                      const SizedBox(),
+                    ],
+                );
+
+              } else if (state is MovieDetailLoading) {
+                return ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: const [
+                     Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3,
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ],
+                );
+
+              } else if (state is MovieDetailError) {
+                return ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    ErrorPage(errMsg: state.errMsg),
+                  ],
+                );
+
+              } else {
+                return ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: const [
+                     ErrorPage(errMsg: "Something Went Wrong !"),
+                  ],
+                );
+              }
+            },
+          ),
         ),
       ),
     );

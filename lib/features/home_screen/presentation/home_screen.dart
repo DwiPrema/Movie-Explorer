@@ -25,8 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<MovieBloc>().add(LoadHomeScreen());
+      },
+      child: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
         children: [
           Padding(
             padding: const EdgeInsets.all(16),

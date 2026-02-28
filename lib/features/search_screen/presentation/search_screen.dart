@@ -28,109 +28,100 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color(0xff303030),
-              borderRadius: BorderRadius.circular(100),
-            ),
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: TextField(
-                onChanged: (value) {
-                  context.read<SearchBloc>().add(
-                    DisplaySearchedMovie(query: value),
-                  );
-                },
-                style: const TextStyle(color: AppColors.white, fontSize: 14),
-                controller: _searchController,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.search, color: AppColors.grey),
-                  hintText: "Search Movie...",
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-        ),
-
-        const SizedBox(height: 8),
-
-        Expanded(
-          child: BlocBuilder<SearchBloc, SearchState>(
-            buildWhen: (prev, curr) =>
-                curr is SearchInitial ||
-                curr is SearchLoading ||
-                curr is SearchEmpty ||
-                curr is SearchLoaded ||
-                curr is SearchError,
-            builder: (context, state) {
-              if (state is SearchInitial) {
-                return Center(
-                  child: subtitle("Type to search...", color: AppColors.white),
-                );
-              }
-
-              if (state is SearchLoading) {
-                return ListView.builder(
-                  padding: const EdgeInsets.only(bottom: 50),
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return const RepaintBoundary(child: LoadingSearchWidget());
-                  },
-                );
-              }
-
-              if (state is SearchEmpty) {
-                return subtitle(state.message, color: AppColors.white);
-              }
-
-              if (state is SearchLoaded) {
-                return ListView.builder(
-                  padding: const EdgeInsets.only(bottom: 50),
-                  itemCount: state.searchResults.length,
-                  itemBuilder: (context, index) {
-                    final movie = state.searchResults[index];
-
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          AppRoutes.toDetail,
-                          arguments: {
-                            'movieId': movie.movieId,
-                            'genreId': movie.genreIds.isNotEmpty
-                                ? movie.genreIds
-                                : 28,
-                          },
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<SearchBloc>().add(
+          DisplaySearchedMovie(query: _searchController.text),
+        );
+      },
+      child: BlocBuilder<SearchBloc, SearchState>(
+        builder: (context, state) {
+          return ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xff303030),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: TextField(
+                      onChanged: (value) {
+                        context.read<SearchBloc>().add(
+                          DisplaySearchedMovie(query: value),
                         );
                       },
-                      child: RepaintBoundary(
-                        child: MovieTileCard(
-                          titleMovie: movie.title,
-                          posterUrl: movie.posterUrl,
-                          genres: movie.genreNames,
-                          popularity: movie.popularity,
-                        ),
+                      style: const TextStyle(
+                        color: AppColors.white,
+                        fontSize: 14,
                       ),
-                    );
-                  },
-                );
-              }
+                      controller: _searchController,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.search, color: AppColors.grey),
+                        hintText: "Search Movie...",
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
 
-              if (state is SearchError) {
-                return ErrorPage(errMsg: state.errMsg);
-              }
+              const SizedBox(height: 8),
 
-              return const SizedBox.shrink();
-            },
-          ),
-        ),
-      ],
+              if (state is SearchInitial)
+               Center(
+                    child: subtitle(
+                      "Type to search...",
+                      color: AppColors.white,
+                    ),
+                  ),
+
+              if (state is SearchLoading)
+                ...List.generate(
+                  5,
+                  (_) => const RepaintBoundary(child: LoadingSearchWidget()),
+                ),
+
+              if (state is SearchEmpty)
+                Center(child: subtitle(state.message, color: AppColors.white)),
+
+              if (state is SearchLoaded)
+                ...state.searchResults.map((movie) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.toDetail,
+                        arguments: {
+                          'movieId': movie.movieId,
+                          'genreId': movie.genreIds.isNotEmpty
+                              ? movie.genreIds
+                              : 28,
+                        },
+                      );
+                    },
+                    child: RepaintBoundary(
+                      child: MovieTileCard(
+                        titleMovie: movie.title,
+                        posterUrl: movie.posterUrl,
+                        genres: movie.genreNames,
+                        popularity: movie.popularity,
+                      ),
+                    ),
+                  );
+                }),
+
+              if (state is SearchError) ErrorPage(errMsg: state.errMsg),
+
+              const SizedBox(height: 50),
+            ],
+          );
+        },
+      ),
     );
   }
 }
