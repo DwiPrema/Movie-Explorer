@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_explorer/core/constant/colors.dart';
+import 'package:movie_explorer/core/routes/app_routes.dart';
 import 'package:movie_explorer/features/search_screen/bloc/search_bloc.dart';
 import 'package:movie_explorer/features/search_screen/bloc/search_event.dart';
 import 'package:movie_explorer/features/search_screen/bloc/search_state.dart';
@@ -90,12 +91,26 @@ class _SearchScreenState extends State<SearchScreen> {
                   itemBuilder: (context, index) {
                     final movie = state.searchResults[index];
 
-                    return RepaintBoundary(
-                      child: MovieTileCard(
-                        titleMovie: movie.title,
-                        posterUrl: movie.posterUrl,
-                        genres: movie.genreNames,
-                        popularity: movie.popularity,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.toDetail,
+                          arguments: {
+                            'movieId': movie.movieId,
+                            'genreId': movie.genreIds.isNotEmpty
+                                ? movie.genreIds
+                                : 28,
+                          },
+                        );
+                      },
+                      child: RepaintBoundary(
+                        child: MovieTileCard(
+                          titleMovie: movie.title,
+                          posterUrl: movie.posterUrl,
+                          genres: movie.genreNames,
+                          popularity: movie.popularity,
+                        ),
                       ),
                     );
                   },
