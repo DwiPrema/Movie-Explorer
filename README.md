@@ -13,6 +13,7 @@ This project is built as a learning project to practice Flutter, REST API integr
 - Loading handling
 - Clean architecture (core & features separation)
 - BLoC state management
+- Infinite scroll pagination (Lazy Loading)
 
 ## Tech Stack
 - **Flutter**
@@ -24,51 +25,6 @@ This project is built as a learning project to practice Flutter, REST API integr
 - **TMDB API**
 - **Environment Variables** (`flutter_dotenv`)
 
-## 📁 Project Structure (Simplified)
-
-```text
-lib/
-├── core/
-│   ├── constant/
-│   ├── error/
-│   ├── models/
-│   ├── network/
-│   ├── routes/
-│   ├── utils/
-│   └── view_model/
-├── features/
-│   ├── genres_features/
-│   │   ├── bloc/
-│   │   └── data/
-│   │       ├── model/
-│   │       └── services/
-│   ├── home_screen/
-│   │   ├── bloc/
-│   │   ├── data/
-│   │   │   ├── models/
-│   │   │   └── services/
-│   │   ├── domain/
-│   │   ├── presentation/
-│   │   └── widgets/
-│   ├── movie_detail/
-│   │   ├── bloc/
-│   │   ├── data/
-│   │   │   ├── models/
-│   │   │   └── services/
-│   │   ├── presentation/
-│   │   └── widgets/
-│   └── search_screen/
-│       ├── bloc/
-│       ├── data/
-│       │   └── services/
-│       ├── presentation/
-│       └── widgets/
-├── widgets
-    ├── error_widget/
-    ├── image/
-    └── reusable_widget/
-└── main.dart
-```
 ## Screenshots
 🚧 Screenshots will be added soon
 

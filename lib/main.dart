@@ -13,6 +13,7 @@ import 'package:movie_explorer/features/search_screen/presentation/search_screen
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -68,8 +69,8 @@ class _MovieExplorerState extends State<MovieExplorer> {
 
   @override
   Widget build(BuildContext context) {
-    double itemWidth = MediaQuery.of(context).size.width / 2;
-    double indicatorWidth = 70;
+    final double itemWidth = MediaQuery.of(context).size.width / 2;
+    final double indicatorWidth = 70;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

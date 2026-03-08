@@ -20,47 +20,44 @@ class DetailCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Poster
-                        Flexible(
-                          flex: 1,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: AppCachedImage(
-                              aspectRatio: const AspectRatio(aspectRatio: 2/3),
-                              imageUrl: state.posterUrl,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-          
-                        // Movie info
-                        Flexible(
-                          flex: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _InfoText("Original title", state.originalTitle),
-                              _InfoText(
-                                "Original language",
-                                state.originalLanguage,
-                              ),
-                              _InfoText("Released date", state.releaseDate),
-                              _InfoText(
-                                "Production country",
-                                state.productionCountriesText,
-                              ),
-                              _InfoText("Status", state.status),
-                              _InfoText("Tagline", state.tagline),
-                              _InfoText("Genres", state.genresText),
-                            ],
-                          ),
-                        ),
-                      ],
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Poster
+              Flexible(
+                flex: 1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: AppCachedImage(
+                    isPortrait: true,
+                    imageUrl: state.posterUrl,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+
+              // Movie info
+              Flexible(
+                flex: 1,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _InfoText("Original title", state.originalTitle),
+                    _InfoText("Original language", state.originalLanguage),
+                    _InfoText("Released date", state.releaseDate),
+                    _InfoText(
+                      "Production country",
+                      state.productionCountriesText,
                     ),
+                    _InfoText("Status", state.status),
+                    _InfoText("Tagline", state.tagline),
+                    _InfoText("Genres", state.genresText),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

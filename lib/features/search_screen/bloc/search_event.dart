@@ -5,3 +5,5 @@ final class DisplaySearchedMovie extends SearchEvent {
 
   DisplaySearchedMovie({required this.query});
 }
+
+class LoadMoreMovie extends SearchEvent {}

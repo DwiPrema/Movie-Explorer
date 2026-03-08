@@ -4,10 +4,11 @@ import 'package:movie_explorer/features/movie_detail/data/models/movie_detail_mo
 class SearchService {
   final ApiClient _apiClient = ApiClient();
 
-  Future<List<MovieDetailModel>> searchMovie(String query) async {
+  Future<List<MovieDetailModel>> searchMovie(String query, int page) async {
+
     final result = await _apiClient.getRequest(
       "/search/movie",
-      queryParams: {"query": query},
+      queryParams: {"query": query, "page" : page},
     );
 
     final data = result.data;

@@ -7,7 +7,7 @@ class AppCachedImage extends StatelessWidget {
   final double? height;
   final BoxFit fit;
   final BorderRadius? borderRadius;
-  final AspectRatio aspectRatio;
+  final bool isPortrait;
 
   const AppCachedImage({
     super.key,
@@ -16,21 +16,27 @@ class AppCachedImage extends StatelessWidget {
     this.height,
     this.fit = BoxFit.cover,
     this.borderRadius,
-    required this.aspectRatio,
+    this.isPortrait = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final image = AspectRatio(
-      aspectRatio: aspectRatio.aspectRatio,
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        width: width,
-        height: height,
-        fit: fit,
-        placeholder: (context, url) => const _ImageLoading(),
-        errorWidget: (context, url, error) => const _ImageError(),
-      ),
+    final image = CachedNetworkImage(
+      imageUrl: imageUrl,
+      width: width,
+      height: height,
+      fit: fit,
+      memCacheHeight: height != null && height!.isFinite && height! > 0
+          ? (height! * MediaQuery.of(context).devicePixelRatio).round()
+          : null,
+      memCacheWidth: width != null && width!.isFinite && width! > 0
+          ? (width! * MediaQuery.of(context).devicePixelRatio).round()
+          : null,
+      maxHeightDiskCache: 1000,
+      maxWidthDiskCache: 1000,
+      placeholder: (context, url) =>
+          isPortrait ? Image.asset("assets/images/image_placeholder_portrait.jpg", fit: BoxFit.cover) : Image.asset("assets/images/image_placeholder.jpg", fit: BoxFit.cover),
+      errorWidget: (context, url, error) => const _ImageError(),
     );
 
     if (borderRadius != null) {
@@ -38,21 +44,6 @@ class AppCachedImage extends StatelessWidget {
     }
 
     return image;
-  }
-}
-
-class _ImageLoading extends StatelessWidget {
-  const _ImageLoading();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: Image.asset(
-        "assets/images/image_placeholder.jpg",
-        fit: BoxFit.cover,
-        alignment: Alignment.center,
-      ),
-    );
   }
 }
 

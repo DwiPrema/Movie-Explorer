@@ -32,13 +32,9 @@ class MovieTileCard extends StatelessWidget {
           Expanded(
             flex: 1,
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(14),
-                child: AspectRatio(
-                  aspectRatio: 2/3,
-                  child: AppCachedImage(
-                    aspectRatio: const AspectRatio(aspectRatio: 2/3),
-                    imageUrl: posterUrl)),
-              ),
+              borderRadius: BorderRadius.circular(14),
+              child: AppCachedImage(imageUrl: posterUrl, isPortrait: true,),
+            ),
           ),
 
           const SizedBox(width: 16),
@@ -46,60 +42,60 @@ class MovieTileCard extends StatelessWidget {
           Expanded(
             flex: 2,
             child: AspectRatio(
-              aspectRatio: 4/3,
+              aspectRatio: 4 / 3,
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      titleMovie,
-                      maxLines: 2,
-                      style: const TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        fontFamily: "RacingSansOne",
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                        color: AppColors.white,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    titleMovie,
+                    maxLines: 2,
+                    style: const TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      fontFamily: "RacingSansOne",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w900,
+                      color: AppColors.white,
+                    ),
+                  ),
+
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 6,
+                        children: genres
+                            .take(4)
+                            .map((genre) => _GenreChip(label: genre))
+                            .toList(),
                       ),
-                    ),
-                
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 6,
-                          children: genres
-                              .map((genre) => _GenreChip(label: genre))
-                              .take(4)
-                              .toList(),
-                        ),
-                
-                        const SizedBox(height: 12),
-                
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.local_fire_department,
-                              color: Colors.orange,
-                              size: 20,
-                            ),
-                            const SizedBox(width: 6),
-                            subtitle(
-                              popularity,
-                              fontSize: 12,
-                              color: AppColors.grey,
-                              align: TextAlign.left,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+
+                      const SizedBox(height: 12),
+
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.local_fire_department,
+                            color: Colors.orange,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 6),
+                          subtitle(
+                            popularity,
+                            fontSize: 12,
+                            color: AppColors.grey,
+                            align: TextAlign.left,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            ),
+          ),
         ],
       ),
     );

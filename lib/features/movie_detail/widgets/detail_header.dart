@@ -20,9 +20,8 @@ class DetailHeader extends StatelessWidget {
             children: [
               Positioned.fill(
                 child: AppCachedImage(
-                  aspectRatio: const AspectRatio(aspectRatio: 16/9),
-                  imageUrl: state.backdropUrl,
-                  fit: BoxFit.cover,
+                    imageUrl: state.backdropUrl,
+                    fit: BoxFit.cover,
                 ),
               ),
 

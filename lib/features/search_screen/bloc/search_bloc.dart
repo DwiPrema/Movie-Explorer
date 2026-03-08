@@ -18,11 +18,18 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   late final Map<int, String> _genreMap;
   late final StreamSubscription _genreSub;
 
+  int _page = 1;
+  bool _hasReachedMax = false;
+  bool _isFetching = false;
+  List<MovieDetailViewModel> _movies = [];
+
   SearchBloc({required this.genreBloc}) : super(SearchInitial()) {
     on<DisplaySearchedMovie>(
       _onSearchMovie,
       transformer: debounce(const Duration(milliseconds: 800)),
     );
+
+    on<LoadMoreMovie>(_onLoadMore);
 
     _genreSub = genreBloc.stream.listen((state) {
       if (state is GenreLoaded) {
@@ -41,6 +48,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     DisplaySearchedMovie event,
     Emitter<SearchState> emit,
   ) async {
+    _page = 1;
     final query = event.query.trim();
 
     if (query == _latestQuery && state is! SearchError) return;
@@ -51,12 +59,15 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       return;
     }
 
+    _movies.clear();
+    _hasReachedMax = false;
+
     if (state is! SearchLoading) {
       emit(SearchLoading());
     }
 
     try {
-      final movies = await service.searchMovie(event.query);
+      final movies = await service.searchMovie(event.query, _page);
 
       if (_latestQuery != query) return;
 
@@ -65,7 +76,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         return;
       }
 
-      final results = movies.where((m) => m.isValid).map((movie) {
+      _movies = movies.where((m) => m.isValid).map((movie) {
         final genreNames = movie.genreIds
             .map((id) => _genreMap[id])
             .whereType<String>()
@@ -74,12 +85,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         return MovieDetailViewModel.fromModel(movie, genreNames: genreNames);
       }).toList();
 
-      if (results.isEmpty) {
+      if (_movies.isEmpty) {
         emit(SearchEmpty(message: "Movie not found for \"$query\" "));
         return;
       }
 
-      emit(SearchLoaded(searchResults: results));
+      emit(SearchLoaded(searchResults: _movies));
     } on NetworkException {
       _latestQuery = '';
       emit(SearchError(errMsg: "Please check your connection !"));
@@ -93,5 +104,37 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       _latestQuery = '';
       emit(SearchError(errMsg: "Something Went Wrong !"));
     }
+  }
+
+  Future<void> _onLoadMore(
+    LoadMoreMovie event,
+    Emitter<SearchState> emit,
+  ) async {
+    if (_isFetching || _hasReachedMax) return;
+
+    _isFetching = true;
+
+    _page++;
+
+    final movies = await service.searchMovie(_latestQuery, _page);
+
+    if (movies.isEmpty) {
+      _hasReachedMax = true;
+    }
+
+    _movies.addAll(
+      movies.where((m) => m.isValid).map((movie) {
+        final genreNames = movie.genreIds
+            .map((id) => _genreMap[id])
+            .whereType<String>()
+            .toList();
+
+        return MovieDetailViewModel.fromModel(movie, genreNames: genreNames);
+      }).toList(),
+    );
+
+    emit(SearchLoaded(searchResults: _movies));
+
+    _isFetching = false;
   }
 }

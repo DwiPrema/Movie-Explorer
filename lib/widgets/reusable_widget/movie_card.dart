@@ -27,9 +27,9 @@ class MovieCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppCachedImage(
-                  aspectRatio: const AspectRatio(aspectRatio: 2/3),
-                  imageUrl: movie.posterUrl(size: "w342"),
-                  borderRadius: BorderRadius.circular(10),
+                  isPortrait: true,
+                    imageUrl: movie.posterUrl(size: "w342"),
+                    borderRadius: BorderRadius.circular(10),
                 ),
                 const SizedBox(height: 5),
                 Expanded(

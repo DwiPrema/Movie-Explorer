@@ -21,9 +21,23 @@ class CarouselImage extends StatefulWidget {
 class _CarouselImageState extends State<CarouselImage> {
   int _currentIndex = 0;
 
+    bool _isVisible = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Implement lazy loading - only load images when widget becomes visible
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && !_isVisible) {
+        setState(() => _isVisible = true);
+      }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+    final double screenHeight = MediaQuery.of(context).size.height;
     return BlocSelector<MovieBloc, MovieState, MovieCategoryViewData>(
       selector: (state) => selectMovieCategory(state, widget.category),
       builder: (context, state) {
@@ -78,15 +92,19 @@ class _CarouselImageState extends State<CarouselImage> {
                         .map((movie) {
                           return Padding(
                             padding: const EdgeInsets.all(16),
-                            child: AppCachedImage(
-                              aspectRatio: const AspectRatio(
-                                aspectRatio: 16 / 9,
-                              ),
-                              imageUrl: movie.backdropUrl(),
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
+                              child: _isVisible
+                                  ? AppCachedImage(
+                                      imageUrl: movie.backdropUrl(),
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                      borderRadius: BorderRadius.circular(15),
+                                    )
+                                  : Container(
+                                      color: AppColors.grey.withAlpha(50),
+                                      child: const Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
                           );
                         })
                         .toList(),

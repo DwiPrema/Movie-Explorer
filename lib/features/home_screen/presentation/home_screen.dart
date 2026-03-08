@@ -18,8 +18,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       context.read<MovieBloc>().add(LoadHomeScreen());
+
+      await Future.delayed(const Duration(milliseconds: 200));
     });
   }
 

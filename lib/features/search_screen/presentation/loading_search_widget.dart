@@ -23,7 +23,7 @@ class LoadingSearchWidget extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 2 / 3,
                 child: Image.asset(
-                  "assets/images/image_placeholder.jpg",
+                  "assets/images/image_placeholder_portrait.jpg",
                   fit: BoxFit.cover,
                 ),
               ),

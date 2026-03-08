@@ -30,7 +30,7 @@ class CarouselCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    final double screenWidth = MediaQuery.of(context).size.width;
 
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
