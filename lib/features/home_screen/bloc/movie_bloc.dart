@@ -34,7 +34,10 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
           currentState.copyWith(
             movies: {
               ...currentState.movies,
-              category: result.results.take(10).toList(),
+              category: result.results
+                  .where((res) => res.isValid)
+                  .take(10)
+                  .toList(),
             },
             status: {...currentState.status, category: MovieStatus.success},
             dates: {...currentState.dates, category: result.dates},
@@ -95,10 +98,22 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
           currentState.copyWith(
             movies: {
               ...currentState.movies,
-              MovieCategory.upComing: results[0].results.take(10).toList(),
-              MovieCategory.nowPlaying: results[1].results.take(10).toList(),
-              MovieCategory.popular: results[2].results.take(10).toList(),
-              MovieCategory.topRated: results[3].results.take(10).toList(),
+              MovieCategory.upComing: results[0].results
+                  .where((res) => res.isValid)
+                  .take(10)
+                  .toList(),
+              MovieCategory.nowPlaying: results[1].results
+                  .where((res) => res.isValid)
+                  .take(10)
+                  .toList(),
+              MovieCategory.popular: results[2].results
+                  .where((res) => res.isValid)
+                  .take(10)
+                  .toList(),
+              MovieCategory.topRated: results[3].results
+                  .where((res) => res.isValid)
+                  .take(10)
+                  .toList(),
             },
             dates: {
               ...currentState.dates,

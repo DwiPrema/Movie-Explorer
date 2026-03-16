@@ -83,12 +83,6 @@ class _CarouselImageState extends State<CarouselImage> {
                   width: double.infinity,
                   child: CarouselSlider(
                     items: state.movies
-                        .where(
-                          (movie) =>
-                              movie.poster != null &&
-                              movie.poster!.isNotEmpty &&
-                              movie.backdropUrl().isNotEmpty,
-                        )
                         .map((movie) {
                           return Padding(
                             padding: const EdgeInsets.all(16),

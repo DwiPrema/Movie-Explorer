@@ -24,15 +24,15 @@ class MovieModel {
       year: json["release_date"],
       poster: json["poster_path"],
       backdropPath: json["backdrop_path"],
-      genres: (json["genre_ids"] as List)
-      .map((g) => g as int)
-      .toList(),
+      genres: (json["genre_ids"] as List).map((g) => g as int).toList(),
     );
   }
 
+  bool get hasValidBackdrop => backdropPath != null && backdropPath!.isNotEmpty;
+
   bool get hasValidPoster => poster != null && poster!.isNotEmpty;
 
-  bool get isValid => hasValidPoster && title.isNotEmpty && year.isNotEmpty;
+  bool get isValid => hasValidPoster && hasValidBackdrop && title.isNotEmpty && year.isNotEmpty;
 
   String posterUrl({String size = "w500"}) {
     if (poster == null || poster!.isEmpty) {
